@@ -1,0 +1,17 @@
+Responsive [important]
+Navbar static
+Home page:
+   a grid showing some poster
+   random movies that has only scroll for it 
+filter in navbar
+moves to filter page and shows results
+a movie should have add to favo add to watchlist in every movie grid displaying
+pages:
+   home page
+   login page and signup store in local storage[use googleauth also]
+   favourites page store in local storage for particular user[protected route]
+   watchlist page store in local storage for particular user [protected route]
+   movies page
+   tv page
+   details page[if a movie or tv is clicked]
+set redux for favo,watchlist,login
