@@ -40,8 +40,6 @@ function Homepage() {
   }, [dispatch]);
 
 
-  console.log(ontheAir);
-
   return (
     <Container sx={{ marginTop: 10 }}>
       <Typography variant='h4'>Now Playing</Typography>
