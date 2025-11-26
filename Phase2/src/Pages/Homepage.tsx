@@ -12,7 +12,7 @@ import {
   Popularfns,
   topRatedfns,
 } from '../redux/homeAction';
-import NowPlayingPage from './NowPlayingPage';
+
 
 function Homepage() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ function Homepage() {
 
           <Typography
             sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
-            onClick={() => navigate("/nowplayingpage")}
+            onClick={() => navigate("/seemore/nowplaying")}
           >
             See More
           </Typography>
@@ -85,6 +85,15 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/popular")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>Top Rated</Typography>
@@ -102,6 +111,15 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/toprated")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>Upcoming</Typography>
@@ -119,6 +137,15 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/upcoming")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>Airing today</Typography>
@@ -136,6 +163,15 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/airingtoday")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>On the Air</Typography>
@@ -153,9 +189,18 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/ontheair")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
-      <Typography variant='h4'>Populars</Typography>
+      <Typography variant='h4'>Popular</Typography>
       <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 2, '&::-webkit-scrollbar': { display: 'none' } }}>
         {Populars.map((item) => (
           <Box key={item.id} sx={{ width: 150, flexShrink: 0 }}>
@@ -170,6 +215,15 @@ function Homepage() {
 
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/populars")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>Rated</Typography>
@@ -188,6 +242,15 @@ function Homepage() {
           </Box>
 
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/seemore/rated")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
     </Container>

@@ -9,7 +9,7 @@ import Signup from './Pages/Signup'
 import Tv from './Pages/Tv'
 import Watchlist from './Pages/Watchlist'
 import Movies from './Pages/Movies'
-import NowPlayingPage from './Pages/NowPlayingPage'
+import Seemore from './Pages/Seemore'
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         <Route path='/movies' element={<Movies/>} />
         <Route path='/tv' element={<Tv/>} />
         <Route path='/watchlist' element={<Watchlist/>} />
-        <Route path='/nowplayingpage' element={<NowPlayingPage/>} />
+        <Route path='/seemore/:type' element={<Seemore/>} />
       </Routes>
     </>
   )
