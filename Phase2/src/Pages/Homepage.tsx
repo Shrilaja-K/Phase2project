@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Container } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux'; 
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   nowPlayingfn,
   Popularfn,
@@ -10,10 +11,11 @@ import {
   ontheAirfn,
   Popularfns,
   topRatedfns,
-} from '../redux/homeAction'; 
+} from '../redux/homeAction';
+import NowPlayingPage from './NowPlayingPage';
 
 function Homepage() {
- 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const nowPlaying = useSelector(state => state.home.nowplaying);
@@ -21,8 +23,8 @@ function Homepage() {
   const topRated = useSelector(state => state.home.toprated);
   const upComing = useSelector(state => state.home.upcoming);
   const airingToday = useSelector(state => state.home.airingtoday);
-  const ontheAir = useSelector(state => state.home.ontheair); 
-  const Populars = useSelector(state => state.home.populars); 
+  const ontheAir = useSelector(state => state.home.ontheair);
+  const Populars = useSelector(state => state.home.populars);
   const topRateds = useSelector(state => state.home.toprateds);
 
 
@@ -35,10 +37,10 @@ function Homepage() {
     dispatch(ontheAirfn());
     dispatch(Popularfns());
     dispatch(topRatedfns());
-  }, [dispatch]); 
+  }, [dispatch]);
 
- 
-console.log(ontheAir);
+
+  console.log(ontheAir);
 
   return (
     <Container sx={{ marginTop: 10 }}>
@@ -54,8 +56,18 @@ console.log(ontheAir);
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
               {item.title}
             </Typography>
+
           </Box>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          <Typography
+            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            onClick={() => navigate("/nowplayingpage")}
+          >
+            See More
+          </Typography>
+        </Box>
       </Box>
 
       <Typography variant='h4'>Popular Movies</Typography>
@@ -70,6 +82,7 @@ console.log(ontheAir);
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
               {item.title}
             </Typography>
+
           </Box>
         ))}
       </Box>
@@ -86,6 +99,7 @@ console.log(ontheAir);
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
               {item.title}
             </Typography>
+
           </Box>
         ))}
       </Box>
@@ -102,6 +116,7 @@ console.log(ontheAir);
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
               {item.title}
             </Typography>
+
           </Box>
         ))}
       </Box>
@@ -113,15 +128,16 @@ console.log(ontheAir);
             <img
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               style={{ width: '100%', borderRadius: '10px' }}
-              alt={item.title}
+              alt={item.name}
             />
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
-              {item.title}
+              {item.name}
             </Typography>
+
           </Box>
         ))}
       </Box>
-      
+
       <Typography variant='h4'>On the Air</Typography>
       <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 2, '&::-webkit-scrollbar': { display: 'none' } }}>
         {ontheAir.map((item) => (
@@ -129,11 +145,12 @@ console.log(ontheAir);
             <img
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               style={{ width: '100%', borderRadius: '10px' }}
-              alt={item.title}
+              alt={item.name}
             />
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
-              {item.title}
+              {item.name}
             </Typography>
+
           </Box>
         ))}
       </Box>
@@ -145,11 +162,12 @@ console.log(ontheAir);
             <img
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               style={{ width: '100%', borderRadius: '10px' }}
-              alt={item.title}
+              alt={item.name}
             />
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
-              {item.title}
+              {item.name}
             </Typography>
+
           </Box>
         ))}
       </Box>
@@ -161,12 +179,14 @@ console.log(ontheAir);
             <img
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               style={{ width: '100%', borderRadius: '10px' }}
-              alt={item.title}
+              alt={item.name}
             />
             <Typography variant='body2' sx={{ mt: 1, textAlign: 'center' }}>
-              {item.title}
+              {item.name}
             </Typography>
+
           </Box>
+
         ))}
       </Box>
 

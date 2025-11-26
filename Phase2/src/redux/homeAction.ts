@@ -10,37 +10,37 @@ NOW_PLAYING,
 } from './homeType';
 import axios from 'axios'
 
-export const fetchnowplaying = (nowplaying) => ({
+export const fetchnowplaying = (data,page) => ({
   type:NOW_PLAYING,  
-  payload:nowplaying
+  payload:{data,page}
 })
-export const fetchpopular = (popular) => ({
+export const fetchpopular = (data,page) => ({
   type:POPULAR,
-  payload:popular
+  payload:{data,page}
 })
-export const fetchtoprated = (toprated) => ({
+export const fetchtoprated = (data,page) => ({
   type:TOP_RATED,
-  payload:toprated
+  payload:{data,page}
 })
-export const fetchupcoming = (upcoming) => ({
+export const fetchupcoming = (data,page) => ({
   type:UP_COMING,
-  payload:upcoming
+  payload:{data,page}
 })
-export const fetchairingtoday = (airingtoday) => ({
+export const fetchairingtoday = (data,page) => ({
   type:AIRING_TODAY,
-  payload:airingtoday
+  payload:{data,page}
 })
-export const fetchontheair = (ontheair) => ({
+export const fetchontheair = (data,page) => ({
   type:ONTHE_AIR,
-  payload:ontheair
+  payload:{data,page}
 })
-export const fetchpopulars = (populars) => ({
+export const fetchpopulars = (data,page) => ({
   type:POPULARS,
-  payload:populars
+  payload:{data,page}
 })
-export const fetchtoprateds = (toprateds) => ({
+export const fetchtoprateds = (data,page) => ({
   type:TOP_RATEDS,
-  payload:toprateds
+  payload:{data,page}
 })
 
 const options = {
@@ -51,82 +51,82 @@ const options = {
   }
 };
 
-export const nowPlayingfn = () => async (dispatch)=>{
+export const nowPlayingfn = (page=1) => async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/movie/now_playing', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchnowplaying(res.data.results));
+      dispatch(fetchnowplaying(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const Popularfn =  () => async (dispatch)=> {
+ export const Popularfn =  (page=1) => async (dispatch)=> {
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/movie/popular', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchpopular(res.data.results));
+      dispatch(fetchpopular(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
 
- export const topRatedfn = () => async (dispatch) =>{
+ export const topRatedfn = (page=1) => async (dispatch) =>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/movie/top_rated', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchtoprated(res.data.results));
+      dispatch(fetchtoprated(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const upComingfn =  () => async (dispatch)=>{
+ export const upComingfn =  (page=1) => async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/movie/upcoming', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchupcoming(res.data.results));
+      dispatch(fetchupcoming(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const airingTodayfn =  () => async (dispatch)=>{
+ export const airingTodayfn =  (page=1) => async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/tv/airing_today', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/tv/airing_today?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchairingtoday(res.data.results));
+      dispatch(fetchairingtoday(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const ontheAirfn =  () => async (dispatch)=>{
+ export const ontheAirfn =  (page=1) => async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/tv/on_the_air', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/tv/on_the_air?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchontheair(res.data.results));
+      dispatch(fetchontheair(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const Popularfns = () =>  async (dispatch)=>{
+ export const Popularfns = (page=1) =>  async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/tv/popular', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/tv/popular?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchpopulars(res.data.results));
+      dispatch(fetchpopulars(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
   }
 
- export const topRatedfns =  () => async (dispatch)=>{
+ export const topRatedfns =  (page=1) => async (dispatch)=>{
     try {
-      const res = await axios.get('https://api.themoviedb.org/3/tv/top_rated', options)
+      const res = await axios.get(`https://api.themoviedb.org/3/tv/top_rated?page=${page}`, options)
       console.log(res.data);
-      dispatch(fetchtoprateds(res.data.results));
+      dispatch(fetchtoprateds(res.data.results,page));
     } catch (err) {
       console.error(err);
     }
