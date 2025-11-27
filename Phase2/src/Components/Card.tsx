@@ -1,60 +1,59 @@
-import { Box, Typography, IconButton,Button } from "@mui/material";
+import React from "react";
+import { Box, Typography, IconButton, Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
 import { Fav, Remfav } from "../redux/favAction";
-import { List,Remlist } from "../redux/watchAction";
+import { List, Remlist } from "../redux/watchAction";
 import { useNavigate } from "react-router-dom";
  
 function Card({ item }) {
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
  
-  const userEmail = useSelector((state) => state.auth?.user?.email); 
-  const favmovie = useSelector((state) => state.fav.favmovie );
-  const addlist = useSelector((state) => state.watch.addlist );
-  const isFav = favmovie?.some((p) => p.id === item.id);
-   const listed = addlist?.some((p) => p.id === item.id);
+  const email = useSelector(state => state.auth?.user?.email);
+  const fav = useSelector(state => state.fav.favmovie);
+  const watch = useSelector(state => state.watch.addlist);
  
-  const handleFav = () => {
-
-    if (!userEmail) {
-      alert("Please login to add favorites");
-      return;
-    }
+  const isFav = fav?.some(f => f.id === item.id);
+  const isWatch = watch?.some(w => w.id === item.id);
  
-    if (isFav) {
-      dispatch(Remfav(item, userEmail));
-    } else {
-      dispatch(Fav(item, userEmail));
-    }
+  const handleFav = (e) => {
+    e.stopPropagation();
+    if (!email) return alert("Login required");
+    isFav ? dispatch(Remfav(item, email)) : dispatch(Fav(item, email));
   };
-
-  const handleWatchlist=()=>{
-    if(!userEmail){
-      alert("Please login to add to Watchlist");
-      return;
-    }
-     if (listed) {
-      dispatch(Remlist(item, userEmail));
-    } else {
-      dispatch(List(item, userEmail));
-    }
+ 
+  const handleWatch = (e) => {
+    e.stopPropagation();
+    if (!email) return alert("Login required");
+    isWatch ? dispatch(Remlist(item, email)) : dispatch(List(item, email));
   };
  
   return (
-    <Box sx={{ width: 150, flexShrink: 0, position: "relative" ,cursor:'pointer'}}
-    onClick={()=>Navigate(`/details/${item.id}`)}>
- 
+    <Box
+      sx={{
+        p: 2,
+        borderRadius: "12px",
+        background: "#3C3D37",
+        transition: "0.3s",
+        cursor: "pointer",
+        "&:hover": { transform: "scale(1.04)" },
+        position: "relative",
+      }}
+      onClick={() => navigate(`/details/${item.id}`)}
+    >
       <IconButton
         onClick={handleFav}
         sx={{
           position: "absolute",
-          top: 5,
-          right: 5,
+          top: 6,
+          right: 6,
+          background: "#ECDFCC",
           color: "red",
-          background: "white",
-          "&:hover": { background: "#eee" },
+          "&:hover": {
+            background: "#d2c4b1",
+          },
         }}
       >
         {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
@@ -62,17 +61,40 @@ function Card({ item }) {
  
       <img
         src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-        style={{ width: "100%", borderRadius: "10px" }}
         alt={item.title || item.name}
+        style={{
+          width: "100%",
+          borderRadius: "10px",
+        }}
       />
- 
-      <Typography variant="body2" sx={{ mt: 1, textAlign: "center" }}>
+
+      <Typography
+        variant="body2"
+        sx={{
+          color: "#ECDFCC",
+          mt: 1.2,
+          textAlign: "center",
+          fontWeight: 500,
+        }}
+      >
         {item.title || item.name}
       </Typography>
+ 
       <Button
-        onClick={handleWatchlist}
+        onClick={handleWatch}
+        fullWidth
+        sx={{
+          mt: 1,
+          background: isWatch ? "#697565" : "transparent",
+          border: "1px solid #ECDFCC",
+          color: "#ECDFCC",
+          "&:hover": {
+            background: "#697565",
+          },
+          borderRadius: "8px",
+        }}
       >
-        Add to Watchlist
+        {isWatch ? "Added" : "Add to Watchlist"}
       </Button>
     </Box>
   );

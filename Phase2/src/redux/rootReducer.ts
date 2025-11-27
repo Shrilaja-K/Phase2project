@@ -3,12 +3,14 @@ import homeReducer from './homeReducer';
 import authReducer from './authReducer';  
 import favReducer from './favReducer';
 import watchReducer from './watchReducer';
+import searchReducer from './searchReducer';
 
 const rootReducer = combineReducers({
   home: homeReducer,
   auth: authReducer,     
   fav: favReducer,
-  watch: watchReducer
+  watch: watchReducer,
+  search: searchReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

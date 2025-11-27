@@ -4,47 +4,45 @@ import {
   LOGOUT,
   AUTH_ERROR,
 } from "./authType";
-
-import type { AuthState } from "./Auth";
-import type { AuthAction } from "./authAction";
-
-const initialState: AuthState = {
+ 
+const initialState = {
   user: null,
   isAuthenticated: false,
   error: null,
 };
-
-export default function authReducer(
-  state: AuthState = initialState,
-  action: AuthAction
-): AuthState {
+ 
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNUP_SUCCESS:
       return {
         ...state,
         user: action.payload.user,
         isAuthenticated: true,
-        error: null,
+        error: null
       };
-
+ 
     case LOGIN_SUCCESS:
       return {
         ...state,
         user: action.payload.user,
         isAuthenticated: true,
-        error: null,
+        error: null
       };
-
+ 
     case AUTH_ERROR:
+      return { ...state, error: action.payload };
+ 
+    case LOGOUT:
       return {
         ...state,
-        error: action.payload,
+        user: null,
+        isAuthenticated: false,
+        error: null
       };
-
-    case LOGOUT:
-      return initialState;
-
+ 
     default:
       return state;
   }
-}
+};
+ 
+export default authReducer;

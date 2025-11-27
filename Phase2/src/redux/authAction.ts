@@ -83,6 +83,6 @@ export const loginUser = (email: string, password: string) => {
       return dispatch(authError("Invalid email or password"));
     }
 
-    dispatch(loginSuccess(found));
+    dispatch(loginSuccess(found,'local'));
   };
 };

@@ -12,23 +12,70 @@ import {
   Popularfns,
   topRatedfns,
 } from '../redux/homeAction';
-import Slider from '../Components/Slider';
+import Card from '../Components/Card';
+
+
+function Section({ title, data, seeMorePath }) {
+  const navigate = useNavigate();
+  return (
+    <Box sx={{ mb: 6 }}> 
+      
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 700,
+            color: "#ECDFCC",
+            mt: 2
+          }}
+        >
+          {title.toUpperCase()}
+        </Typography>
+
+        <Typography
+          variant="h6"
+          sx={{
+            color: "#ECDFCC",
+            mt: 2,
+            cursor: "pointer",
+            marginRight:2
+          }}
+          onClick={() => navigate(seeMorePath)}
+        >
+          See More
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(5, 1fr)",
+            lg: "repeat(6, 1fr)",
+          },
+        }}
+      >
+        {data?.slice(0, 6).map(item => (
+          <Card key={item.id} item={item} />
+        ))}
+      </Box>
+
+    </Box> 
+  );
+}
+
+
+
 
 
 
 function Homepage() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const nowPlaying = useSelector(state => state.home.nowplaying);
-  const popular = useSelector(state => state.home.popular);
-  const topRated = useSelector(state => state.home.toprated);
-  const upComing = useSelector(state => state.home.upcoming);
-  const airingToday = useSelector(state => state.home.airingtoday);
-  const ontheAir = useSelector(state => state.home.ontheair);
-  const Populars = useSelector(state => state.home.populars);
-  const topRateds = useSelector(state => state.home.toprateds);
-
+  const home = useSelector(state => state.home);
 
   useEffect(() => {
     dispatch(nowPlayingfn());
@@ -41,18 +88,20 @@ function Homepage() {
     dispatch(topRatedfns());
   }, [dispatch]);
 
-
   return (
-    <>
-    <Slider title="Now Playing" data={nowPlaying} seeMorePath="/seemore/nowplaying" />
-<Slider title="Popular Movies" data={popular} seeMorePath="/seemore/popular" />
-<Slider title="Top Rated" data={topRated} seeMorePath="/seemore/toprated" />
-<Slider title="Upcoming" data={upComing} seeMorePath="/seemore/upcoming" />
-<Slider title="Airing Today" data={airingToday} seeMorePath="/seemore/airingtoday" />
-<Slider title="On The Air" data={ontheAir} seeMorePath="/seemore/ontheair" />
-<Slider title="Popular TV" data={Populars} seeMorePath="/seemore/populars" />
-<Slider title="Top Rated TV" data={topRateds} seeMorePath="/seemore/rated" />
-</>
-  )
+    <Box sx={{ background: "#181C14", pt: 10 }}>
+
+      <Section title="Now Playing" data={home.nowplaying} seeMorePath="/seemore/nowplaying" />
+      <Section title="Popular Movies" data={home.popular} seeMorePath="/seemore/nowplaying" />
+      <Section title="Top Rated" data={home.toprated} seeMorePath="/seemore/nowplaying" />
+      <Section title="Upcoming" data={home.upcoming} seeMorePath="/seemore/nowplaying" />
+      <Section title="Airing Today" data={home.airingtoday} seeMorePath="/seemore/nowplaying" />
+      <Section title="On The Air" data={home.ontheair} seeMorePath="/seemore/nowplaying" />
+      <Section title="Popular TV" data={home.populars} seeMorePath="/seemore/nowplaying" />
+      <Section title="Top Rated TV" data={home.toprateds} seeMorePath="/seemore/nowplaying" />
+
+    </Box>
+  );
 }
+
 export default Homepage;
