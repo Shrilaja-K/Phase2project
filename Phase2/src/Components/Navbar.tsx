@@ -56,17 +56,31 @@ function Navbar() {
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <Button color='inherit' sx={{
-              color: '#ECDFCC',
-              border: '1px solid #697565',
-              px: 3,
-              borderRadius: 2,
-              '&:hover': {
-                backgroundColor: '#3C3D37',
-              }
-            }} onClick={() => navigate('/login')}>
-              Login
-            </Button>
+            {isAuthenticated ? (
+              <Button color='inherit' sx={{
+                color: '#ECDFCC',
+                border: '1px solid #697565',
+                px: 3,
+                borderRadius: 2,
+                '&:hover': {
+                  backgroundColor: '#3C3D37',
+                }
+              }} onClick={handleLogout}> 
+                Logout
+              </Button>
+            ) : (
+              <Button color='inherit' sx={{
+                color: '#ECDFCC',
+                border: '1px solid #697565',
+                px: 3,
+                borderRadius: 2,
+                '&:hover': {
+                  backgroundColor: '#3C3D37',
+                }
+              }} onClick={() => navigate('/login')}>
+                Login
+              </Button>
+            )}
           </Box>
 
 
@@ -111,11 +125,16 @@ function Navbar() {
                     }
                   }}
                     onClick={() => {
+                      if(isAuthenticated){
+                        handleLogout();
+                      } else{
                       navigate('/login');
                       toggleDrawer();
+                      }
+
                     }
                     }>
-                    <ListItemText primary="Login" />
+                    <ListItemText primary={isAuthenticated ? "Logout" : "Login"} />
                   </ListItemButton>
                 </ListItem>
               </List>
@@ -127,3 +146,13 @@ function Navbar() {
 }
 
         export default Navbar;
+
+
+
+
+
+
+ 
+
+          
+        

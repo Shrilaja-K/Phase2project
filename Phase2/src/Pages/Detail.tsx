@@ -19,7 +19,17 @@ function Details() {
   const [ratingValue, setRatingValue] = useState("");
  
   const API_KEY = import.meta.env.VITE_CINE_API_KEY;
+  const TOKEN = import.meta.env.VITE_TOKEN;
  
+  console.log(axios.get('https://api.themoviedb.org/3/authentication/token/new?api_key='+API_KEY).then(res => {
+    axios.get(`https://www.themoviedb.org/authenticate/${res.data.request_token}?api_key=${API_KEY}&redirect_to=http://localhost:5173/`)
+  }));
+  // console.log(axios.get();
+   
+  console.log(axios.get('https://api.themoviedb.org/3/authentication/guest_session/new?api_key='+API_KEY));
+  // console.log(axios.get('https://api.themoviedb.org/3/authentication/session/new?api_key='+API_KEY+'&request_token='+TOKEN));
+  // console.log(axios.get('https://api.themoviedb.org/3/authentication/session/convert/4?api_key='+API_KEY+'&request_token='+TOKEN));
+  
   
   useEffect(() => {
     const fetchDetails = async () => {

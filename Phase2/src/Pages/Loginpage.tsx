@@ -23,7 +23,7 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(loginUser(form.email, form.password) as any);
+    dispatch(loginUser(form.email, form.password));
   };
 
   const handleGoogle = (res: any) => {

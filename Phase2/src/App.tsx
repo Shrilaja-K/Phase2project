@@ -10,6 +10,7 @@ import Tv from './Pages/Tv'
 import Watchlist from './Pages/Watchlist'
 import Movies from './Pages/Movies'
 import Seemore from './Pages/Seemore'
+import './App.css'
 
 
 function App() {

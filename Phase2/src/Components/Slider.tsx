@@ -7,8 +7,8 @@ function Slider({ title, data, seeMorePath }) {
 
   return (
     <>
-      <Typography variant="h4" sx={{ mt: 3 }}>
-        {title}
+      <Typography variant="h6" sx={{ mt: 3 ,color: "#ECDFCC", fontWeight: "bold"}}>
+        {title.toUpperCase()}
       </Typography>
 
       <Box
@@ -26,7 +26,7 @@ function Slider({ title, data, seeMorePath }) {
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
-            sx={{ cursor: "pointer", color: "blue", fontWeight: "bold" }}
+            sx={{ cursor: "pointer", color: "##ECDFCC", fontWeight: "bold" }}
             onClick={() => navigate(seeMorePath)}
           >
             See More

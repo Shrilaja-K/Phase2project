@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import {
   Box,
   Typography,
-  Container,
-  TextField,
-  MenuItem,
   Grid,
+  TextField,
+  MenuItem
 } from "@mui/material";
+ 
 import { setSearch } from "../redux/searchAction";
 import Card from "../Components/Card";
-
+ 
 import {
   nowPlayingfn,
   Popularfn,
@@ -20,28 +20,27 @@ import {
   airingTodayfn,
   ontheAirfn,
   topRatedfns,
-  Popularfns
+  Popularfns,
 } from "../redux/homeAction";
-
-
+ 
 function Seemore() {
-  const { type } = useParams();  
+  const { type } = useParams();
   const dispatch = useDispatch();
-  
+ 
   const [page, setPage] = useState(1);
-  const searchText = useSelector((state) => state.search.search);
   const [localSearch, setLocalSearch] = useState("");
   const [genre, setGenre] = useState("all");
   const [sort, setSort] = useState("none");
-
-     useEffect(() => {
-    const delay = setTimeout(() => {
-      dispatch(setSearch(localSearch));
-    }, 400);
  
+  const searchText = useSelector((state) => state.search.search);
+ 
+ 
+  useEffect(() => {
+    const delay = setTimeout(() => dispatch(setSearch(localSearch)), 400);
     return () => clearTimeout(delay);
   }, [localSearch]);
-
+ 
+  
   const movies = useSelector((state) => {
     if (type === "nowplaying") return state.home.nowplaying;
     if (type === "popular") return state.home.popular;
@@ -53,8 +52,9 @@ function Seemore() {
     if (type === "rated") return state.home.toprateds;
     return [];
   });
+ 
 
-const filtered = movies
+  const filtered = movies
     ?.filter((item) =>
       (item.title || item.name)
         .toLowerCase()
@@ -72,7 +72,6 @@ const filtered = movies
       return 0;
     });
 
-
   useEffect(() => {
     if (type === "nowplaying") dispatch(nowPlayingfn(page));
     if (type === "popular") dispatch(Popularfn(page));
@@ -83,40 +82,71 @@ const filtered = movies
     if (type === "populars") dispatch(Popularfns(page));
     if (type === "rated") dispatch(topRatedfns(page));
   }, [page, type]);
-
+ 
   useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop + 100 >=
+        window.innerHeight + document.documentElement.scrollTop + 150 >=
         document.documentElement.scrollHeight
       ) {
         setPage((p) => p + 1);
       }
     };
-
+ 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+ 
   return (
-    <Box sx={{ marginTop: 10 }}>
-      <Typography variant="h4" sx={{ mb: 3, textTransform: "capitalize" }}>
+    <Box
+      sx={{
+        background: "#181C14",
+        pt: 10,
+        pb: 5,
+        px: { xs: 2,  },
+        
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          mb: 3,
+          textTransform: "capitalize",
+          color: "#ECDFCC",
+          fontWeight: 700,
+        }}
+      >
         {type}
       </Typography>
  
-  
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          mb: 4,
+          // background: "#3C3D37",
+          p: 2,
+          borderRadius: "12px",
+          justifyContent: 'center'
+        }}
+      >
         <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             label="Search"
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
+            InputLabelProps={{ style: { color: "#ECDFCC" } }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: "#ECDFCC",
+                "& fieldset": { borderColor: "#697565" },
+                "&:hover fieldset": { borderColor: "#ECDFCC" },
+              },
+            }}
           />
         </Grid>
  
-  
         <Grid item xs={6} md={4}>
           <TextField
             select
@@ -124,6 +154,14 @@ const filtered = movies
             label="Filter by Genre"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
+            InputLabelProps={{ style: { color: "#ECDFCC" } }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: "#ECDFCC",
+                "& fieldset": { borderColor: "#697565" },
+                "&:hover fieldset": { borderColor: "#ECDFCC" },
+              },
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="28">Action</MenuItem>
@@ -143,6 +181,14 @@ const filtered = movies
             label="Sort By"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
+            InputLabelProps={{ style: { color: "#ECDFCC" } }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: "#ECDFCC",
+                "& fieldset": { borderColor: "#697565" },
+                "&:hover fieldset": { borderColor: "#ECDFCC" },
+              },
+            }}
           >
             <MenuItem value="none">None</MenuItem>
             <MenuItem value="rating">Rating</MenuItem>
@@ -151,12 +197,22 @@ const filtered = movies
           </TextField>
         </Grid>
       </Grid>
-
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+ 
+   
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(5, 1fr)",
+            lg: "repeat(6, 1fr)",
+          },
+        }}
+      >
         {filtered?.map((item) => (
-          <Box key={item.id} sx={{ width: 150 }}>
-            <Card item={item} />
-          </Box>
+          <Card key={item.id} item={item} />
         ))}
       </Box>
     </Box>

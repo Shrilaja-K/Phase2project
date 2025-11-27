@@ -16,6 +16,7 @@ function Favorites() {
       </Container>
     );
   }
+
  
   return (
     <Container sx={{ marginTop: 10 }}>
