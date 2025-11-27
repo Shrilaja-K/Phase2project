@@ -1,36 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Box,
   Typography,
   Chip,
-  Container,
   TextField,
   Button,
   Divider,
 } from "@mui/material";
- 
+
 function Details() {
   const { id } = useParams();
- 
+  const navigate = useNavigate();
+
+  const API_KEY = import.meta.env.VITE_CINE_API_KEY;
+
   const [data, setData] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [showFull, setShowFull] = useState({});
   const [ratingValue, setRatingValue] = useState("");
- 
-  const API_KEY = import.meta.env.VITE_CINE_API_KEY;
-  const TOKEN = import.meta.env.VITE_TOKEN;
- 
-  console.log(axios.get('https://api.themoviedb.org/3/authentication/token/new?api_key='+API_KEY).then(res => {
-    axios.get(`https://www.themoviedb.org/authenticate/${res.data.request_token}?api_key=${API_KEY}&redirect_to=http://localhost:5173/`)
-  }));
-  // console.log(axios.get();
-   
-  console.log(axios.get('https://api.themoviedb.org/3/authentication/guest_session/new?api_key='+API_KEY));
-  // console.log(axios.get('https://api.themoviedb.org/3/authentication/session/new?api_key='+API_KEY+'&request_token='+TOKEN));
-  // console.log(axios.get('https://api.themoviedb.org/3/authentication/session/convert/4?api_key='+API_KEY+'&request_token='+TOKEN));
-  
-  
+  const [providers, setProviders] = useState([]);
+  const [similar, setSimilar] = useState([]);
+
+  // Load Cached Rating
+  useEffect(() => {
+    const savedRating = localStorage.getItem(`rating_${id}`);
+    if (savedRating) setRatingValue(savedRating);
+  }, [id]);
+
+  const handleAddRating = () => {
+    localStorage.setItem(`rating_${id}`, ratingValue);
+    alert("Rating saved locally!");
+  };
+
+  const handleDeleteRating = () => {
+    localStorage.removeItem(`rating_${id}`);
+    setRatingValue("");
+    alert("Rating removed");
+  };
+
+  // Fetch Movie Details
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -42,11 +53,10 @@ function Details() {
         console.log(err);
       }
     };
- 
     fetchDetails();
   }, [id]);
- 
 
+  // Fetch Reviews
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -58,140 +68,250 @@ function Details() {
         console.log(err);
       }
     };
- 
     fetchReviews();
   }, [id]);
- 
 
-  const handleAddRating = async () => {
-    try {
-      await axios.post(
-        `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${API_KEY}`,
-        // {
-        //   value: Number(ratingValue),
-        // },
-        {
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }
-      );
- 
-      alert("Rating added successfully!");
-      setRatingValue("");
-    } catch (err) {
-      console.log(err);
-      alert("Error adding rating");
-    }
-  };
+  // Fetch Watch Providers
+  useEffect(() => {
+    const fetchProviders = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`
+        );
+        const IN = res.data.results?.IN;
+        if (IN?.flatrate) setProviders(IN.flatrate);
+        else setProviders([]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProviders();
+  }, [id]);
 
-  const handleDeleteRating = async () => {
-    try {
-      await axios.delete(
-        `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${API_KEY}`
-      );
- 
-      alert("Your rating has been removed.");
-    } catch (err) {
-      console.log(err);
-      alert("Error deleting rating");
-    }
-  };
- 
+  // Fetch Similar Movies (TMDB API)
+  useEffect(() => {
+    const fetchSimilar = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}`
+        );
+        setSimilar(res.data.results);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSimilar();
+  }, [id]);
+
   if (!data)
-    return <h2 style={{ marginTop: "100px" }}>Loading...</h2>;
- 
+    return (
+      <Typography
+        sx={{ color: "#ECDFCC", mt: 20, textAlign: "center", fontSize: 24 }}
+      >
+        Loading...
+      </Typography>
+    );
+
   return (
-    <Container sx={{ mt: 10, pb: 10 }}>
- 
-      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-          style={{ width: 300, borderRadius: "12px" }}
-        />
- 
-        <Box sx={{ maxWidth: 600 }}>
-          <Typography variant="h4" sx={{ mb: 1 }}>
+    <Box sx={{ background: "#181C14", p: 4, pt: 12, color: "#ECDFCC" }}>
+      {/* Top Section: Poster, Details, Recommendations */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "350px 1fr 300px" },
+          gap: 4,
+        }}
+      >
+        {/* Poster */}
+        <Box>
+          <Box
+            component="img"
+            src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+            sx={{
+              width: "100%",
+              borderRadius: 2,
+              boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
+            }}
+          />
+        </Box>
+
+        {/* Center Column: Details */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 2,
+          }}
+        >
+          <Typography variant="h4" sx={{ gridColumn: "1/3", mb: 1 }}>
             {data.title}
           </Typography>
- 
-          <Typography variant="body1" sx={{ mb: 2 }}>
+
+          <Typography sx={{ gridColumn: "1/3", color: "#697565" }}>
             {data.overview}
           </Typography>
- 
-          <Typography variant="h6"> Rating: {data.vote_average.toFixed(1)}</Typography>
-          <Typography variant="h6"> Release: {data.release_date}</Typography>
- 
-          <Typography variant="h6" sx={{ mt: 2 }}> Genres:</Typography>
-          <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 1 }}>
-            {data.genres?.map((g) => (
-              <Chip key={g.id} label={g.name} />
+
+          <Typography>⭐ Rating: {data.vote_average.toFixed(1)}</Typography>
+          <Typography>📅 Release: {data.release_date}</Typography>
+
+          <Box sx={{ gridColumn: "1/3" }}>
+            <Typography>🎬 Genres:</Typography>
+            <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
+              {data.genres.map((g) => (
+                <Chip
+                  key={g.id}
+                  label={g.name}
+                  sx={{ background: "#3C3D37", color: "#ECDFCC" }}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          <Typography>⏱ Runtime: {data.runtime} mins</Typography>
+
+          <Box sx={{ gridColumn: "1/3" }}>
+            <Typography>🗣 Languages:</Typography>
+            <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
+              {data.spoken_languages.map((l, i) => (
+                <Chip
+                  key={i}
+                  label={l.english_name}
+                  sx={{ background: "#3C3D37", color: "#ECDFCC" }}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          {/* Providers */}
+          <Box sx={{ gridColumn: "1/3" }}>
+            <Typography sx={{ mt: 2 }}>🎥 Watch Providers:</Typography>
+            {providers.length === 0 ? (
+              <Typography>No providers available.</Typography>
+            ) : (
+              <Box sx={{ display: "flex", gap: 2, mt: 1, flexWrap: "wrap" }}>
+                {providers.map((p) => (
+                  <Box
+                    key={p.provider_id}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      p: 1,
+                      background: "#3C3D37",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                      style={{ width: 30 }}
+                    />
+                    <Typography>{p.provider_name}</Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+        {/* Right Column: Similar Movies */}
+        <Box
+          sx={{
+            background: "#3C3D37",
+            borderRadius: 2,
+            p: 2,
+            height: "100%",
+          }}
+        >
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Similar Movies
+          </Typography>
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {similar.slice(0, 4).map((item) => (
+              <Box
+                key={item.id}
+                sx={{ display: "flex", gap: 2, cursor: "pointer" }}
+                onClick={() => navigate(`/details/${item.id}`)}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${item.poster_path}`}
+                  style={{ width: 60, borderRadius: 4 }}
+                />
+                <Typography>{item.title}</Typography>
+              </Box>
             ))}
           </Box>
- 
-          <Typography variant="h6" sx={{ mt: 2 }}>
-             Runtime: {data.runtime} mins
-          </Typography>
- 
-          <Typography variant="h6" sx={{ mt: 2 }}>
-             Production Companies:
-          </Typography>
-          {data.production_companies?.map((c) => (
-            <Typography key={c.id}>• {c.name}</Typography>
-          ))}
- 
-          <Typography variant="h6" sx={{ mt: 2 }}>
-             Spoken Languages:
-          </Typography>
-          {data.spoken_languages?.map((l, i) => (
-            <Chip key={i} label={l.english_name} sx={{ mr: 1, mt: 1 }} />
-          ))}
- 
-          <Typography variant="h6" sx={{ mt: 3 }}>
-             Homepage:
-          </Typography>
-          <a href={data.homepage} >{data.homepage}</a>
         </Box>
       </Box>
- 
- 
-      <Typography variant="h5">Rate this Movie</Typography>
- 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
-        <TextField
-          label="Rating"
-          type="number"
-          value={ratingValue}
-          onChange={(e) => setRatingValue(e.target.value)}
-          sx={{ width: 200 }}
-        />
-        <Button variant="contained" onClick={handleAddRating}>Add Rating</Button>
-        <Button variant="outlined" color="error" onClick={handleDeleteRating}>
-          Delete Rating
-        </Button>
-      </Box>
- 
-      <Divider sx={{ my: 4 }} />
- 
-      <Typography variant="h5">Reviews</Typography>
- 
-      {reviews.length === 0 ? (
-        <Typography sx={{ mt: 2 }}>No reviews available.</Typography>
-      ) : (
-        <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 3 }}>
-          {reviews.map((rev) => (
-            <Box
-              key={rev.id}
-              sx={{ p: 2, borderRadius: "10px", border: "1px solid grey" }}
-            >
-              <Typography variant="h6">{rev.author}</Typography>
-              <Typography variant="body2">{rev.content}</Typography>
-            </Box>
-          ))}
+
+      {/* Rating Section */}
+      <Box sx={{ mt: 5 }}>
+        <Typography sx={{ mb: 1, fontSize: 20 }}>Rate this Movie</Typography>
+
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <TextField
+            label="Rating"
+            type="number"
+            value={ratingValue}
+            onChange={(e) => setRatingValue(e.target.value)}
+            sx={{
+              width: 120,
+              input: { color: "#ECDFCC" },
+              label: { color: "#ECDFCC" },
+            }}
+          />
+          <Button variant="contained" onClick={handleAddRating}>
+            Save
+          </Button>
+          <Button color="error" variant="outlined" onClick={handleDeleteRating}>
+            Delete
+          </Button>
         </Box>
-      )}
-    </Container>
+      </Box>
+
+      <Divider sx={{ my: 5 }} />
+
+      {/* Reviews with Show More / Less */}
+      <Typography sx={{ mb: 2, fontSize: 20 }}>Reviews</Typography>
+
+      {reviews.map((rev) => {
+        const isFull = showFull[rev.id];
+        const content = isFull
+          ? rev.content
+          : rev.content.slice(0, 200) + (rev.content.length > 200 ? "..." : "");
+
+        return (
+          <Box
+            key={rev.id}
+            sx={{
+              background: "#3C3D37",
+              p: 2,
+              borderRadius: 2,
+              mb: 2,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+              {rev.author}
+            </Typography>
+
+            <Typography>{content}</Typography>
+
+            {rev.content.length > 200 && (
+              <Button
+                sx={{ mt: 1 }}
+                size="small"
+                onClick={() =>
+                  setShowFull({ ...showFull, [rev.id]: !isFull })
+                }
+              >
+                {isFull ? "Show Less" : "Show More"}
+              </Button>
+            )}
+          </Box>
+        );
+      })}
+    </Box>
   );
 }
- 
+
 export default Details;

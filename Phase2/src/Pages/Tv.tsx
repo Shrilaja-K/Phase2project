@@ -27,12 +27,12 @@ function Tv() {
   }, [dispatch]);
   
   return (
-    <>
+     <Box sx={{ background: "#181C14",paddingTop:15 }}>
     <Slider title="Airing Today" data={airingToday} seeMorePath="/seemore/airingtoday" />
 <Slider title="On The Air" data={ontheAir} seeMorePath="/seemore/ontheair" />
 <Slider title="Popular TV" data={Populars} seeMorePath="/seemore/populars" />
 <Slider title="Top Rated TV" data={topRateds} seeMorePath="/seemore/rated" />
-</>
+</Box>
   )
 }
 

@@ -26,6 +26,7 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    toggleDrawer();
     navigate('/login');
   };
 
@@ -146,13 +147,3 @@ function Navbar() {
 }
 
         export default Navbar;
-
-
-
-
-
-
- 
-
-          
-        

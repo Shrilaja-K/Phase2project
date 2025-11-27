@@ -13,10 +13,13 @@ import {
   topRatedfns,
 } from '../redux/homeAction';
 import Card from '../Components/Card';
+import SkeletonCard from '../Components/SkeletonCard';
+
 
 
 function Section({ title, data, seeMorePath }) {
   const navigate = useNavigate();
+
   return (
     <Box sx={{ mb: 6 }}> 
       
@@ -59,9 +62,11 @@ function Section({ title, data, seeMorePath }) {
           },
         }}
       >
-        {data?.slice(0, 6).map(item => (
-          <Card key={item.id} item={item} />
-        ))}
+        {data && data.length > 0
+  ? data.slice(0, 6).map(item => <Card key={item.id} item={item} />)
+  : Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+}
+
       </Box>
 
     </Box> 
@@ -92,13 +97,13 @@ function Homepage() {
     <Box sx={{ background: "#181C14", pt: 10 }}>
 
       <Section title="Now Playing" data={home.nowplaying} seeMorePath="/seemore/nowplaying" />
-      <Section title="Popular Movies" data={home.popular} seeMorePath="/seemore/popular" />
-      <Section title="Top Rated" data={home.toprated} seeMorePath="/seemore/toprated" />
-      <Section title="Upcoming" data={home.upcoming} seeMorePath="/seemore/upcoming" />
-      <Section title="Airing Today" data={home.airingtoday} seeMorePath="/seemore/airingtoday" />
-      <Section title="On The Air" data={home.ontheair} seeMorePath="/seemore/ontheair" />
-      <Section title="Popular TV" data={home.populars} seeMorePath="/seemore/populars" />
-      <Section title="Top Rated TV" data={home.toprateds} seeMorePath="/seemore/toprateds" />
+      <Section title="Popular Movies" data={home.popular} seeMorePath="/seemore/nowplaying" />
+      <Section title="Top Rated" data={home.toprated} seeMorePath="/seemore/nowplaying" />
+      <Section title="Upcoming" data={home.upcoming} seeMorePath="/seemore/nowplaying" />
+      <Section title="Airing Today" data={home.airingtoday} seeMorePath="/seemore/nowplaying" />
+      <Section title="On The Air" data={home.ontheair} seeMorePath="/seemore/nowplaying" />
+      <Section title="Popular TV" data={home.populars} seeMorePath="/seemore/nowplaying" />
+      <Section title="Top Rated TV" data={home.toprateds} seeMorePath="/seemore/nowplaying" />
 
     </Box>
   );

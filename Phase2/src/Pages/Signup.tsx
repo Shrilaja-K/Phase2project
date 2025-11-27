@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { loginSuccess } from "../redux/authAction";
 import { GoogleLogin } from "@react-oauth/google";
 import type {User} from '../redux/Auth'
-import { Box } from "@mui/material";
+import { Box,Paper,Typography,TextField,Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
@@ -47,54 +47,128 @@ const Signup: React.FC = () => {
       };
 
   return (
-    <div style={{ width: "300px", margin: "auto", paddingTop: "40px" }}>
-      <h2>Signup</h2>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#181C14",
+        px: 2,
+      }}
+    >
+      <Paper
+        elevation={5}
+        sx={{
+          width: { xs: "100%", sm: 400 },
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#3C3D37",
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+          color: "#ECDFCC",
+        }}
+      >
+        <Typography variant="h4" textAlign="center" sx={{ fontWeight: 600 }}>
+          Sign Up
+        </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Name"
-          required
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <br /><br />
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          <TextField
+            label="Name"
+            variant="outlined"
+            required
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            sx={{
+              backgroundColor: "#181C14",
+              borderRadius: 1,
+              input: { color: "#ECDFCC" },
+              label: { color: "#ECDFCC" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
+            }}
+          />
 
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <br /><br />
+          <TextField
+            label="Email"
+            variant="outlined"
+            type="email"
+            required
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            sx={{
+              backgroundColor: "#181C14",
+              borderRadius: 1,
+              input: { color: "#ECDFCC" },
+              label: { color: "#ECDFCC" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
+            }}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-        <br /><br />
+          <TextField
+            label="Password"
+            variant="outlined"
+            type="password"
+            required
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            sx={{
+              backgroundColor: "#181C14",
+              borderRadius: 1,
+              input: { color: "#ECDFCC" },
+              label: { color: "#ECDFCC" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
+            }}
+          />
 
-        <button type="submit">Sign Up</button>
-      </form>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: "#697565",
+              color: "#ECDFCC",
+              "&:hover": { backgroundColor: "#ECDFCC", color: "#3C3D37" },
+              py: 1.2,
+            }}
+          >
+            Sign Up
+          </Button>
+        </Box>
 
-      {authError && <p style={{ color: "red" }}>{authError}</p>}
+        {authError && (
+          <Typography color="error" textAlign="center" sx={{ fontWeight: 500 }}>
+            {authError}
+          </Typography>
+        )}
 
-       <Box >
-                <GoogleLogin
-                  onSuccess={handleGoogle}
-                  width="100%"
-                  theme="outline"
-                  size="large"
-                  type="standard"
-                  shape="rectangular"
-                  
-                />
-              </Box>
-    </div>
+        <Button
+          variant="text"
+          sx={{ color: "#ECDFCC", mt: 1 }}
+          onClick={() => Navigate("/login")}
+        >
+          Already have an account? Login
+        </Button>
+
+        <Box sx={{ mt: 2 }}>
+          <GoogleLogin
+            onSuccess={handleGoogle}
+            width="100%"
+            theme="outline"
+            size="large"
+            type="standard"
+            shape="rectangular"
+          />
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

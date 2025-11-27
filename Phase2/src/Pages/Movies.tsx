@@ -29,12 +29,12 @@ function Movies() {
 
 
   return (
-     <>
+     <Box sx={{ background: "#181C14",paddingTop:15 }}>
     <Slider title="Now Playing" data={nowPlaying} seeMorePath="/seemore/nowplaying" />
 <Slider title="Popular Movies" data={popular} seeMorePath="/seemore/popular" />
 <Slider title="Top Rated" data={topRated} seeMorePath="/seemore/toprated" />
 <Slider title="Upcoming" data={upComing} seeMorePath="/seemore/upcoming" />
-</>
+</Box>
   )
 }
 

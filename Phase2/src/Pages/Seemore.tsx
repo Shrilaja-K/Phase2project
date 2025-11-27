@@ -11,6 +11,7 @@ import {
  
 import { setSearch } from "../redux/searchAction";
 import Card from "../Components/Card";
+
  
 import {
   nowPlayingfn,

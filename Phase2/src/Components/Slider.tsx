@@ -6,34 +6,65 @@ function Slider({ title, data, seeMorePath }) {
   const navigate = useNavigate();
 
   return (
-    <>
-      <Typography variant="h6" sx={{ mt: 3 ,color: "#ECDFCC", fontWeight: "bold"}}>
-        {title.toUpperCase()}
-      </Typography>
+    <Box sx={{ background: "#181C14",pb:4}}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+        <Typography variant="h5" sx={{ color: "#ECDFCC", fontWeight: 700 }}>
+          {title}
+        </Typography>
+
+       
+      </Box>
 
       <Box
         sx={{
           display: "flex",
           gap: 2,
           overflowX: "auto",
-          pb: 2,
+          
           "&::-webkit-scrollbar": { display: "none" },
         }}
       >
-        {data.map((item) => (
-          <Card key={item.id} item={item} />
+        {data?.map((item) => (
+          <Box
+            key={item.id}
+            sx={{
+              flexShrink: 0,
+              width: {
+                xs: "45%",    
+                sm: "30%",    
+                md: "18%",     
+                lg: "15%",     
+              },
+            }}
+          >
+            <Card item={item} />
+          </Box>
         ))}
 
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            sx={{ cursor: "pointer", color: "##ECDFCC", fontWeight: "bold" }}
-            onClick={() => navigate(seeMorePath)}
-          >
-            See More
+        <Box
+          onClick={() => navigate(seeMorePath)}
+          sx={{
+            flexShrink: 0,
+            width: {
+              xs: "45%",
+              sm: "30%",
+              md: "18%",
+              lg: "15%",
+            },
+            borderRadius: "10px",
+            background: "#2E2E2E",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
+        >
+          <Typography sx={{ color: "#41ca48ff", fontWeight: "bold" }}>
+            See More →
           </Typography>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 

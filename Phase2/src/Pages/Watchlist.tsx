@@ -1,39 +1,66 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Card from "../Components/Card";
- 
+
 function Watchlist() {
   const addlist = useSelector((state) => state.watch.addlist);
   const userEmail = useSelector((state) => state.auth?.user?.email);
- 
+
   if (!userEmail) {
     return (
-      <Container sx={{ marginTop: 10 }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "#181C14",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "#ECDFCC",
+          padding: 2,
+        }}
+      >
         <Typography variant="h5" color="error">
           Please login to view your Watchlist.
         </Typography>
-      </Container>
+      </Box>
     );
   }
- 
+
   return (
-    <Container sx={{ marginTop: 10 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Your Watchlist 
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#181C14",
+        paddingY: 5,
+        paddingX: { xs: 2, sm: 5 },
+        paddingTop:15
+      }}
+    >
+      <Typography variant="h4" sx={{ mb: 3, color: "#ECDFCC", textAlign: "center" }}>
+        Your Watchlist
       </Typography>
- 
+
       {addlist.length === 0 ? (
-        <Typography>No Watchlist added yet.</Typography>
+        <Typography sx={{ color: "#ECDFCC", textAlign: "center" }}>No Watchlist added yet.</Typography>
       ) : (
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 2,
+            justifyContent: "center",
+          }}
+        >
           {addlist.map((item) => (
-            <Card key={item.id} item={item} />
+            <Box key={item.id} sx={{ width: { xs: "45%", sm: "200px", md: "180px" } }}>
+              <Card item={item} />
+            </Box>
           ))}
         </Box>
       )}
-    </Container>
+    </Box>
   );
 }
- 
+
 export default Watchlist;

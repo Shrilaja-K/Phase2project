@@ -53,7 +53,7 @@ function Card({ item }) {
           color: "red",
           "&:hover": {
             background: "#d2c4b1",
-          },
+          }
         }}
       >
         {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
@@ -70,11 +70,15 @@ function Card({ item }) {
 
       <Typography
         variant="body2"
+        
         sx={{
           color: "#ECDFCC",
           mt: 1.2,
           textAlign: "center",
           fontWeight: 500,
+            
+    overflow: "hidden",
+    height: 15,
         }}
       >
         {item.title || item.name}
@@ -86,6 +90,7 @@ function Card({ item }) {
         sx={{
           mt: 1,
           background: isWatch ? "#697565" : "transparent",
+          fontSize: "0.8rem",
           border: "1px solid #ECDFCC",
           color: "#ECDFCC",
           "&:hover": {
@@ -94,10 +99,10 @@ function Card({ item }) {
           borderRadius: "8px",
         }}
       >
-        {isWatch ? "Added" : "Add to Watchlist"}
+        {isWatch ? "Remove" : "Add to Watchlist"}
       </Button>
     </Box>
   );
 }
  
-export default Card;
+export default Card ;
