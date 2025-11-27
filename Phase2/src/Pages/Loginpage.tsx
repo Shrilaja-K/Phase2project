@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     dispatch(loginUser(form.email, form.password) as any);
   };
 
-  const handleGoogleSuccess = (res: any) => {
+  const handleGoogle = (res: any) => {
     const token = res.credential;
     const decoded: DecodedToken = jwtDecode(token);
 
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
       <button onClick={()=> Navigate('/signup')}>Sign up</button>
        <Box >
                 <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
+                  onSuccess={handleGoogle}
                   width="100%"
                   theme="outline"
                   size="large"
