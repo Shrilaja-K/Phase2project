@@ -4,9 +4,11 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
 import { Fav, Remfav } from "../redux/favAction";
 import { List,Remlist } from "../redux/watchAction";
+import { useNavigate } from "react-router-dom";
  
 function Card({ item }) {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
  
   const userEmail = useSelector((state) => state.auth?.user?.email); 
   const favmovie = useSelector((state) => state.fav.favmovie );
@@ -15,6 +17,7 @@ function Card({ item }) {
    const listed = addlist?.some((p) => p.id === item.id);
  
   const handleFav = () => {
+
     if (!userEmail) {
       alert("Please login to add favorites");
       return;
@@ -40,7 +43,8 @@ function Card({ item }) {
   };
  
   return (
-    <Box sx={{ width: 150, flexShrink: 0, position: "relative" }}>
+    <Box sx={{ width: 150, flexShrink: 0, position: "relative" ,cursor:'pointer'}}
+    onClick={()=>Navigate(`/details/${item.id}`)}>
  
       <IconButton
         onClick={handleFav}
