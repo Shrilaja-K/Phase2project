@@ -39,9 +39,9 @@ export const signupSuccess = (user: User): SignupSuccessAction => ({
   payload: { user },
 });
 
-export const loginSuccess = (user: User): LoginSuccessAction => ({
+export const loginSuccess = (user: User, token: string): LoginSuccessAction => ({
   type: LOGIN_SUCCESS,
-  payload: { user },
+  payload: { user, token },
 });
 
 export const authError = (error: string): AuthErrorAction => ({

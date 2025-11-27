@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authAction";
 import type { RootState } from "../redux/rootReducer";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { loginSuccess } from "../redux/authAction";
+import { Box } from "@mui/material";
+import type {User} from '../redux/Auth'
+
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +24,21 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     dispatch(loginUser(form.email, form.password) as any);
+  };
+
+  const handleGoogleSuccess = (res: any) => {
+    const token = res.credential;
+    const decoded: DecodedToken = jwtDecode(token);
+
+    const user: User = {
+      username: decoded.name,
+      email: decoded.email,
+      picture: decoded.picture,
+      id: decoded.sub,  
+    }
+
+    dispatch(loginSuccess(user,token));
+    Navigate("/");
   };
 
   return (
@@ -48,6 +69,17 @@ const Login: React.FC = () => {
 
       {authError && <p style={{ color: "red" }}>{authError}</p>}
       <button onClick={()=> Navigate('/signup')}>Sign up</button>
+       <Box >
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  width="100%"
+                  theme="outline"
+                  size="large"
+                  type="standard"
+                  shape="rectangular"
+                  
+                />
+              </Box>
 
     </div>
   );
