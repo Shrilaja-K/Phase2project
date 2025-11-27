@@ -13,6 +13,7 @@ import {
   topRatedfns,
   Popularfns
 } from "../redux/homeAction";
+import Card from "../Components/Card";
 
 function Seemore() {
   const { type } = useParams();  
@@ -66,14 +67,7 @@ function Seemore() {
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
         {movies?.map((item) => (
           <Box key={item.id} sx={{ width: 150 }}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-              style={{ width: "100%", borderRadius: "10px" }}
-              alt={item.title || item.name}
-            />
-            <Typography sx={{ textAlign: "center", mt: 1 }}>
-              {item.title || item.name}
-            </Typography>
+             <Card key={item.id} item={item} />
           </Box>
         ))}
       </Box>

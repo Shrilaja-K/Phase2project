@@ -1,16 +1,18 @@
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, IconButton,Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
 import { Fav, Remfav } from "../redux/favAction";
+import { List,Remlist } from "../redux/watchAction";
  
 function Card({ item }) {
   const dispatch = useDispatch();
  
   const userEmail = useSelector((state) => state.auth?.user?.email); 
-  const favmovie = useSelector((state) => state.fav.favmovie);
- 
-  const isFav = favmovie.some((p) => p.id === item.id);
+  const favmovie = useSelector((state) => state.fav.favmovie );
+  const addlist = useSelector((state) => state.watch.addlist );
+  const isFav = favmovie?.some((p) => p.id === item.id);
+   const listed = addlist?.some((p) => p.id === item.id);
  
   const handleFav = () => {
     if (!userEmail) {
@@ -22,6 +24,18 @@ function Card({ item }) {
       dispatch(Remfav(item, userEmail));
     } else {
       dispatch(Fav(item, userEmail));
+    }
+  };
+
+  const handleWatchlist=()=>{
+    if(!userEmail){
+      alert("Please login to add to Watchlist");
+      return;
+    }
+     if (listed) {
+      dispatch(Remlist(item, userEmail));
+    } else {
+      dispatch(List(item, userEmail));
     }
   };
  
@@ -51,6 +65,11 @@ function Card({ item }) {
       <Typography variant="body2" sx={{ mt: 1, textAlign: "center" }}>
         {item.title || item.name}
       </Typography>
+      <Button
+        onClick={handleWatchlist}
+      >
+        Add to Watchlist
+      </Button>
     </Box>
   );
 }
