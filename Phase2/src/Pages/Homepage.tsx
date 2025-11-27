@@ -48,7 +48,6 @@ function Homepage() {
 <Slider title="Popular Movies" data={popular} seeMorePath="/seemore/popular" />
 <Slider title="Top Rated" data={topRated} seeMorePath="/seemore/toprated" />
 <Slider title="Upcoming" data={upComing} seeMorePath="/seemore/upcoming" />
-
 <Slider title="Airing Today" data={airingToday} seeMorePath="/seemore/airingtoday" />
 <Slider title="On The Air" data={ontheAir} seeMorePath="/seemore/ontheair" />
 <Slider title="Popular TV" data={Populars} seeMorePath="/seemore/populars" />
