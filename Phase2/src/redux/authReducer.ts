@@ -4,14 +4,17 @@ import {
   LOGOUT,
   AUTH_ERROR,
 } from "./authType";
- 
+ import type {AuthAction}  from "./authAction";
+ import type { AuthState } from "./Auth";
+
 const initialState = {
   user: null,
+  token:null,
   isAuthenticated: false,
   error: null,
 };
  
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action:AuthAction) :AuthState => {
   switch (action.type) {
     case SIGNUP_SUCCESS:
       return {
@@ -25,6 +28,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
+        token:action.payload.token ?? null,
         isAuthenticated: true,
         error: null
       };

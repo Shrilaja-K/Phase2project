@@ -2,7 +2,7 @@ import React,{ Suspense, lazy } from 'react'
 import Navbar from './Components/Navbar'
 import {Routes,Route} from 'react-router-dom'
 import ProtectedRoute from './Components/ProtectedRoute'
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 
 const Homepage = lazy(() => import("./Pages/Homepage"));
@@ -20,7 +20,11 @@ function App() {
   return (
     <>
       <Navbar />
-      <Suspense
+      
+      <Routes>
+        <Route path='/' element={<Homepage/>} />
+        <Route path='/details/:id' element={
+          <Suspense
         fallback={
           <Box
             sx={{
@@ -32,19 +36,114 @@ function App() {
           >
           </Box>
         }
-      >
-      <Routes>
-        <Route path='/' element={<Homepage/>} />
-        <Route path='/details/:id' element={<Detail/>} />
-        <Route path='/favorites' element={<ProtectedRoute><Favorites/></ProtectedRoute>} />
-        <Route path='/login' element={<Loginpage/>} />
-        <Route path='/signup' element={<Signup/>} />
-        <Route path='/movies' element={<Movies/>} />
-        <Route path='/tv' element={<Tv/>} />
-        <Route path='/watchlist' element={<ProtectedRoute><Watchlist/></ProtectedRoute>} />
-        <Route path='/seemore/:type' element={<Seemore/>} />
+      ><Detail/></Suspense>} />
+        <Route path='/favorites' element={<ProtectedRoute>
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Favorites/></Suspense></ProtectedRoute>} />
+        <Route path='/login' element={
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Loginpage/></Suspense>} />
+        <Route path='/signup' element={
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Signup/></Suspense>} />
+        <Route path='/movies' element={
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Movies/></Suspense>} />
+        <Route path='/tv' element={
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Tv/></Suspense>} />
+        <Route path='/watchlist' element={<ProtectedRoute>
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Watchlist/></Suspense></ProtectedRoute>} />
+        <Route path='/seemore/:type' element={
+          <Suspense
+        fallback={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+            }}
+          >
+            </Box>
+        }
+          ><Seemore/></Suspense>} />
+        <Route path='*' element={
+          <Box sx={{marginTop:50,display:'flex',justifyContent:'center'}}>
+            <Typography >
+              No Match Found
+            </Typography>
+          </Box>
+        } />
+
       </Routes>
-      </Suspense>
     </>
   )
 }

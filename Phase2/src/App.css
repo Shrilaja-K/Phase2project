@@ -1,9 +1,12 @@
 *{
   padding: 0;
   margin: 0;
-  background-color: "#181C14";
+ 
 }
 
+body{
+   background-color: "#181C14";
+}
 
 
 /* #root {

@@ -1,10 +1,11 @@
 import { SET_SEARCH } from "./searchType";
+import type { searchAction } from "./searchAction";
 
 const initialState = {
     search: ""
 }
 
-export default function searchReducer(state = initialState, action) {
+export default function searchReducer(state = initialState, action:searchAction) {
     switch (action.type) {
         case SET_SEARCH:
             return {

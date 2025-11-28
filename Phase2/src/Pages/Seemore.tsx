@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -11,6 +11,7 @@ import {
  
 import { setSearch } from "../redux/searchAction";
 import Card from "../Components/Card";
+import type { RootState } from "../redux/rootReducer";
 
  
 import {
@@ -33,16 +34,17 @@ function Seemore() {
   const [genre, setGenre] = useState("all");
   const [sort, setSort] = useState("none");
  
-  const searchText = useSelector((state) => state.search.search);
+  const searchText = useSelector((state:RootState) => state.search.search);
  
  
   useEffect(() => {
-    const delay = setTimeout(() => dispatch(setSearch(localSearch)), 400);
+    console.log(filtered.length)
+    const delay = setTimeout(() => dispatch(setSearch(localSearch)), 800);
     return () => clearTimeout(delay);
   }, [localSearch]);
  
   
-  const movies = useSelector((state) => {
+  const movies = useSelector((state:RootState) => {
     if (type === "nowplaying") return state.home.nowplaying;
     if (type === "popular") return state.home.popular;
     if (type === "toprated") return state.home.toprated;
@@ -97,6 +99,8 @@ function Seemore() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  
  
   return (
     <Box
@@ -105,7 +109,7 @@ function Seemore() {
         pt: 10,
         pb: 5,
         px: { xs: 2,  },
-        
+        height:'100vh'
       }}
     >
       <Typography
@@ -125,7 +129,6 @@ function Seemore() {
         spacing={2}
         sx={{
           mb: 4,
-          // background: "#3C3D37",
           p: 2,
           borderRadius: "12px",
           justifyContent: 'center'
@@ -138,13 +141,7 @@ function Seemore() {
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                color: "#ECDFCC",
-                "& fieldset": { borderColor: "#697565" },
-                "&:hover fieldset": { borderColor: "#ECDFCC" },
-              },
-            }}
+            
           />
         </Grid>
  
@@ -156,13 +153,7 @@ function Seemore() {
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                color: "#ECDFCC",
-                "& fieldset": { borderColor: "#697565" },
-                "&:hover fieldset": { borderColor: "#ECDFCC" },
-              },
-            }}
+            
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="28">Action</MenuItem>
@@ -183,13 +174,7 @@ function Seemore() {
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                color: "#ECDFCC",
-                "& fieldset": { borderColor: "#697565" },
-                "&:hover fieldset": { borderColor: "#ECDFCC" },
-              },
-            }}
+           
           >
             <MenuItem value="none">None</MenuItem>
             <MenuItem value="rating">Rating</MenuItem>
@@ -212,6 +197,10 @@ function Seemore() {
           },
         }}
       >
+
+        {filtered.length===0 && <Box sx={{display:'flex',justifyContent:'center',color:'white'}}>
+          <Typography>No results found</Typography>
+          </Box>}
         {filtered?.map((item) => (
           <Card key={item.id} item={item} />
         ))}

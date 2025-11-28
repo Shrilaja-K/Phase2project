@@ -1,7 +1,6 @@
-import React, {  useEffect } from 'react'
-import { Box, Container, Typography } from '@mui/material';
+import  {  useEffect } from 'react'
+import { Box, } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   airingTodayfn,
   ontheAirfn,
@@ -9,15 +8,15 @@ import {
   topRatedfns,
 } from '../redux/homeAction';
 import Slider from '../Components/Slider';
+import type { RootState } from '../redux/rootReducer';
 
 function Tv() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const airingToday = useSelector(state => state.home.airingtoday);
-  const ontheAir = useSelector(state => state.home.ontheair);
-  const Populars = useSelector(state => state.home.populars);
-  const topRateds = useSelector(state => state.home.toprateds);
+  const airingToday = useSelector((state:RootState) => state.home.airingtoday);
+  const ontheAir = useSelector((state:RootState) => state.home.ontheair);
+  const Populars = useSelector((state:RootState) => state.home.populars);
+  const topRateds = useSelector((state:RootState) => state.home.toprateds);
 
   useEffect(() => {
     dispatch(airingTodayfn());

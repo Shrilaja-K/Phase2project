@@ -10,7 +10,6 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const userEmail = useSelector((state: any) => state.auth?.user?.email);
 
   if (!userEmail) {
-    // Redirect to login page if user is not authenticated
     return <Navigate to="/login" replace />;
   }
 

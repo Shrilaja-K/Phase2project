@@ -1,15 +1,16 @@
-import { AppBar, Box, Button, Icon, Toolbar, Typography, IconButton, Drawer, ListItem,ListItemButton, ListItemText, List } from '@mui/material';
+import { AppBar, Box, Button, Toolbar, Typography, IconButton, Drawer, ListItem,ListItemButton, ListItemText, List } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/authAction';
 import MenuIcon from '@mui/icons-material/Menu';
+import type { RootState } from '../redux/rootReducer';
 
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state:RootState) => state.auth.isAuthenticated);
 
   const [open, setOpen] = useState(false);
   const toggleDrawer = () => {

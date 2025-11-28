@@ -9,7 +9,7 @@ import type {User} from '../redux/Auth'
 import { Box,Paper,Typography,TextField,Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Signup: React.FC = () => {
+const Signup = () => {
   const dispatch = useDispatch();
   const Navigate=useNavigate();
   const authError = useSelector((state: RootState) => state.auth.error);
@@ -28,7 +28,7 @@ const Signup: React.FC = () => {
         name: form.name,
         email: form.email,
         password: form.password,
-      }) as any
+      }) 
     );
   };
    const handleGoogle = (res: any) => {
@@ -68,6 +68,7 @@ const Signup: React.FC = () => {
           flexDirection: "column",
           gap: 3,
           color: "#ECDFCC",
+          mt:15
         }}
       >
         <Typography variant="h4" textAlign="center" sx={{ fontWeight: 600 }}>
@@ -90,9 +91,7 @@ const Signup: React.FC = () => {
               borderRadius: 1,
               input: { color: "#ECDFCC" },
               label: { color: "#ECDFCC" },
-              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
-              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
-            }}
+               }}
           />
 
           <TextField
@@ -107,9 +106,7 @@ const Signup: React.FC = () => {
               borderRadius: 1,
               input: { color: "#ECDFCC" },
               label: { color: "#ECDFCC" },
-              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
-              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
-            }}
+             }}
           />
 
           <TextField
@@ -124,9 +121,7 @@ const Signup: React.FC = () => {
               borderRadius: 1,
               input: { color: "#ECDFCC" },
               label: { color: "#ECDFCC" },
-              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ECDFCC" },
-              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#697565" },
-            }}
+              }}
           />
 
           <Button

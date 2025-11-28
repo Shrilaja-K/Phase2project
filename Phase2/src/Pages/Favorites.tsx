@@ -1,12 +1,14 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import Card from "../Components/Card";
+import type { RootState } from "../redux/rootReducer";
 
 function Favorites() {
-  const favmovie = useSelector((state) => state.fav.favmovie);
-  const userEmail = useSelector((state) => state.auth?.user?.email);
 
+  const favmovie = useSelector((state:RootState) => state.fav.favmovie);
+  const userEmail = useSelector((state:RootState) => state.auth?.user?.email);
+
+  const userFav=favmovie.filter((f) => f.favby===userEmail)
   if (!userEmail) {
     return (
       <Box
@@ -41,7 +43,7 @@ function Favorites() {
         Your Favorites
       </Typography>
 
-      {favmovie.length === 0 ? (
+      {userFav.length === 0 ? (
         <Typography sx={{ color: "#ECDFCC", textAlign: "center" }}>No favorites added yet.</Typography>
       ) : (
         <Box
@@ -52,7 +54,7 @@ function Favorites() {
             justifyContent: "center",
           }}
         >
-          {favmovie.map((item) => (
+          {userFav.map((item) => (
             <Box key={item.id} sx={{ width: { xs: "45%", sm: "200px", md: "180px" } }}>
               <Card item={item} />
             </Box>

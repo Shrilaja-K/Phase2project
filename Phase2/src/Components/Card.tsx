@@ -15,7 +15,7 @@ function Card({ item }) {
   const fav = useSelector(state => state.fav.favmovie);
   const watch = useSelector(state => state.watch.addlist);
  
-  const isFav = fav?.some(f => f.id === item.id);
+  const isFav = fav?.some(f => f.id === item.id && f.favby==email);
   const isWatch = watch?.some(w => w.id === item.id);
  
   const handleFav = (e) => {

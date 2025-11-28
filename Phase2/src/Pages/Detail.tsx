@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+
 import {
   Box,
   Typography,
@@ -24,7 +24,6 @@ function Details() {
   const [providers, setProviders] = useState([]);
   const [similar, setSimilar] = useState([]);
 
-  // Load Cached Rating
   useEffect(() => {
     const savedRating = localStorage.getItem(`rating_${id}`);
     if (savedRating) setRatingValue(savedRating);
@@ -41,7 +40,6 @@ function Details() {
     alert("Rating removed");
   };
 
-  // Fetch Movie Details
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -56,7 +54,6 @@ function Details() {
     fetchDetails();
   }, [id]);
 
-  // Fetch Reviews
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -71,7 +68,6 @@ function Details() {
     fetchReviews();
   }, [id]);
 
-  // Fetch Watch Providers
   useEffect(() => {
     const fetchProviders = async () => {
       try {
@@ -88,7 +84,7 @@ function Details() {
     fetchProviders();
   }, [id]);
 
-  // Fetch Similar Movies (TMDB API)
+ 
   useEffect(() => {
     const fetchSimilar = async () => {
       try {
@@ -114,7 +110,6 @@ function Details() {
 
   return (
     <Box sx={{ background: "#181C14", p: 4, pt: 12, color: "#ECDFCC" }}>
-      {/* Top Section: Poster, Details, Recommendations */}
       <Box
         sx={{
           display: "grid",
@@ -122,7 +117,7 @@ function Details() {
           gap: 4,
         }}
       >
-        {/* Poster */}
+     
         <Box>
           <Box
             component="img"
@@ -135,7 +130,7 @@ function Details() {
           />
         </Box>
 
-        {/* Center Column: Details */}
+    
         <Box
           sx={{
             display: "grid",
@@ -182,7 +177,6 @@ function Details() {
             </Box>
           </Box>
 
-          {/* Providers */}
           <Box sx={{ gridColumn: "1/3" }}>
             <Typography sx={{ mt: 2 }}>🎥 Watch Providers:</Typography>
             {providers.length === 0 ? (
@@ -213,7 +207,6 @@ function Details() {
           </Box>
         </Box>
 
-        {/* Right Column: Similar Movies */}
         <Box
           sx={{
             background: "#3C3D37",
@@ -244,7 +237,6 @@ function Details() {
         </Box>
       </Box>
 
-      {/* Rating Section */}
       <Box sx={{ mt: 5 }}>
         <Typography sx={{ mb: 1, fontSize: 20 }}>Rate this Movie</Typography>
 
@@ -271,7 +263,6 @@ function Details() {
 
       <Divider sx={{ my: 5 }} />
 
-      {/* Reviews with Show More / Less */}
       <Typography sx={{ mb: 2, fontSize: 20 }}>Reviews</Typography>
 
       {reviews.map((rev) => {

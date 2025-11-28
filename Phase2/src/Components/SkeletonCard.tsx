@@ -12,7 +12,6 @@ function SkeletonCard() {
         p: 1,
       }}
     >
-      {/* Poster Skeleton */}
       <Skeleton
         variant="rectangular"
         width="100%"
@@ -20,7 +19,6 @@ function SkeletonCard() {
         sx={{ borderRadius: 1 }}
       />
 
-      {/* Title Skeleton */}
       <Skeleton
         variant="text"
         width="80%"
