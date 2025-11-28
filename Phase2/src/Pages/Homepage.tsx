@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,13 +14,14 @@ import {
 } from '../redux/homeAction';
 import Card from '../Components/Card';
 import SkeletonCard from '../Components/SkeletonCard';
+import Footer from '../Components/Footer';
 
 
 function Section({ title, data, seeMorePath }) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ mb: 6 }}> 
+    <Box sx={{p:2}}> 
       
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         
@@ -88,6 +89,7 @@ function Homepage() {
   }, [dispatch]);
 
   return (
+    <Box >
     <Box sx={{ background: "#181C14", pt: 10 }}>
 
       <Section title="Now Playing" data={home.nowplaying} seeMorePath="/seemore/nowplaying" />
@@ -98,7 +100,8 @@ function Homepage() {
       <Section title="On The Air" data={home.ontheair} seeMorePath="/seemore/ontheair" />
       <Section title="Popular TV" data={home.populars} seeMorePath="/seemore/populars" />
       <Section title="Top Rated TV" data={home.toprateds} seeMorePath="/seemore/toprateds" />
-
+    </Box>
+    <Footer />
     </Box>
   );
 }

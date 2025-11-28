@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,Button } from "@mui/material";
 import Card from "../Components/Card";
 import type { RootState } from "../redux/rootReducer";
+import { useNavigate } from "react-router-dom";
+
 
 function Favorites() {
-
+ const Navigate = useNavigate();
   const favmovie = useSelector((state:RootState) => state.fav.favmovie);
   const userEmail = useSelector((state:RootState) => state.auth?.user?.email);
 
@@ -39,6 +41,9 @@ function Favorites() {
         paddingTop:15
       }}
     >
+      <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => Navigate(-1)}>
+        Back
+      </Button>
       <Typography variant="h4" sx={{ mb: 3, color: "#ECDFCC", textAlign: "center" }}>
         Your Favorites
       </Typography>

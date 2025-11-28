@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography ,Button} from "@mui/material";
 import Card from "../Components/Card";
-
+import { useNavigate } from "react-router-dom";
 function Watchlist() {
+  const Navigate = useNavigate();
   const addlist = useSelector((state) => state.watch.addlist);
   const userEmail = useSelector((state) => state.auth?.user?.email);
 
@@ -37,6 +38,9 @@ function Watchlist() {
         paddingTop:15
       }}
     >
+       <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => Navigate(-1)}>
+              Back
+            </Button>
       <Typography variant="h4" sx={{ mb: 3, color: "#ECDFCC", textAlign: "center" }}>
         Your Watchlist
       </Typography>

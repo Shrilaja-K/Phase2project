@@ -3,6 +3,7 @@ import Navbar from './Components/Navbar'
 import {Routes,Route} from 'react-router-dom'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { Box, Typography } from "@mui/material";
+import './App.css';
 
 
 const Homepage = lazy(() => import("./Pages/Homepage"));

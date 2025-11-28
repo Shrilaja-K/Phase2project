@@ -14,7 +14,7 @@ import {
 function Details() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+ 
   const API_KEY = import.meta.env.VITE_CINE_API_KEY;
 
   const [data, setData] = useState(null);
@@ -23,6 +23,8 @@ function Details() {
   const [ratingValue, setRatingValue] = useState("");
   const [providers, setProviders] = useState([]);
   const [similar, setSimilar] = useState([]);
+  const [isAdded, setisAdded] = useState(false);
+  const [isDeleted, setisDeleted] = useState(false);
 
   useEffect(() => {
     const savedRating = localStorage.getItem(`rating_${id}`);
@@ -31,15 +33,18 @@ function Details() {
 
   const handleAddRating = () => {
     localStorage.setItem(`rating_${id}`, ratingValue);
-    alert("Rating saved locally!");
+    setisAdded(true);
+    setisDeleted(false);
   };
 
   const handleDeleteRating = () => {
     localStorage.removeItem(`rating_${id}`);
     setRatingValue("");
-    alert("Rating removed");
+    setisDeleted(true);
+    setisAdded(false);
   };
 
+   
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -110,6 +115,9 @@ function Details() {
 
   return (
     <Box sx={{ background: "#181C14", p: 4, pt: 12, color: "#ECDFCC" }}>
+      <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => navigate(-1)}>
+                Back
+              </Button>
       <Box
         sx={{
           display: "grid",
@@ -117,6 +125,7 @@ function Details() {
           gap: 4,
         }}
       >
+
      
         <Box>
           <Box
@@ -259,12 +268,18 @@ function Details() {
             Delete
           </Button>
         </Box>
+         <Typography>
+            {isAdded && "Rating Added!"}
+            {isDeleted && "Rating Deleted!"}
+          </Typography>
       </Box>
 
       <Divider sx={{ my: 5 }} />
 
       <Typography sx={{ mb: 2, fontSize: 20 }}>Reviews</Typography>
-
+       {reviews.length === 0 &&
+        <Typography>No reviews available.</Typography>
+       }
       {reviews.map((rev) => {
         const isFull = showFull[rev.id];
         const content = isFull

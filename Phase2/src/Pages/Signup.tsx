@@ -152,7 +152,7 @@ const Signup = () => {
           Already have an account? Login
         </Button>
 
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2,justifyContent:"center",display:"flex" }}>
           <GoogleLogin
             onSuccess={handleGoogle}
             width="100%"

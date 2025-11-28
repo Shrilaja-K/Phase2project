@@ -1,5 +1,5 @@
 import React, {  useEffect } from 'react'
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button} from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -30,6 +30,9 @@ function Movies() {
 
   return (
      <Box sx={{ background: "#181C14",paddingTop:15 }}>
+      <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => navigate(-1)}>
+        Back
+      </Button>
     <Slider title="Now Playing" data={nowPlaying} seeMorePath="/seemore/nowplaying" />
 <Slider title="Popular Movies" data={popular} seeMorePath="/seemore/popular" />
 <Slider title="Top Rated" data={topRated} seeMorePath="/seemore/toprated" />

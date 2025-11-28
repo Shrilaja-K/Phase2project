@@ -11,8 +11,9 @@ import type {User} from '../redux/Auth'
 
 
 
-const Login: React.FC = () => {
-  const dispatch = useDispatch();
+const Login = () => {
+ 
+  const dispatch = useDispatch<any>();
   const Navigate=useNavigate();
   const authError = useSelector((state: RootState) => state.auth.error);
 
@@ -25,20 +26,22 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     dispatch(loginUser(form.email, form.password) as any);
+    Navigate("/");
   };
 
   const handleGoogle = (res: any) => {
     const token = res.credential;
-    const decoded: DecodedToken = jwtDecode(token);
 
-    const user: User = {
-      username: decoded.name,
+    const decoded: any = jwtDecode(token);
+
+     const user: User = {
+      name: decoded.name,
       email: decoded.email,
       picture: decoded.picture,
       id: decoded.sub,  
     }
 
-    dispatch(loginSuccess(user,token));
+     dispatch(loginSuccess(user, token) );
     Navigate("/");
   };
 
@@ -135,7 +138,7 @@ const Login: React.FC = () => {
           Don't have an account? Sign Up
         </Button>
 
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2 ,justifyContent:"center",display:"flex"}}>
           <GoogleLogin
             onSuccess={handleGoogle}
             width="100%"
@@ -143,6 +146,7 @@ const Login: React.FC = () => {
             size="large"
             type="standard"
             shape="rectangular"
+           
           />
         </Box>
       </Paper>

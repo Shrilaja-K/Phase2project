@@ -6,7 +6,8 @@ import {
   Typography,
   Grid,
   TextField,
-  MenuItem
+  MenuItem,
+  Button
 } from "@mui/material";
  
 import { setSearch } from "../redux/searchAction";
@@ -24,11 +25,12 @@ import {
   topRatedfns,
   Popularfns,
 } from "../redux/homeAction";
+import { useNavigate } from "react-router-dom";
  
 function Seemore() {
   const { type } = useParams();
   const dispatch = useDispatch();
- 
+  const Navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [localSearch, setLocalSearch] = useState("");
   const [genre, setGenre] = useState("all");
@@ -36,6 +38,21 @@ function Seemore() {
  
   const searchText = useSelector((state:RootState) => state.search.search);
  
+
+  const inputStyle = {
+    '& .MuiInputBase-input': {
+      color: '#FFFFFF', 
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#FFFFFF', 
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#FFFFFF', 
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#FFFFFF', 
+    },
+  };
  
   useEffect(() => {
     console.log(filtered.length)
@@ -43,6 +60,7 @@ function Seemore() {
     return () => clearTimeout(delay);
   }, [localSearch]);
  
+
   
   const movies = useSelector((state:RootState) => {
     if (type === "nowplaying") return state.home.nowplaying;
@@ -109,9 +127,12 @@ function Seemore() {
         pt: 10,
         pb: 5,
         px: { xs: 2,  },
-        height:'100vh'
+        mt:7
       }}
     >
+      <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => Navigate(-1)}>
+        Back
+      </Button>
       <Typography
         variant="h4"
         sx={{
@@ -121,7 +142,7 @@ function Seemore() {
           fontWeight: 700,
         }}
       >
-        {type}
+        {type?.toUpperCase()}
       </Typography>
  
       <Grid
@@ -141,7 +162,7 @@ function Seemore() {
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-            
+            sx={inputStyle}
           />
         </Grid>
  
@@ -153,7 +174,7 @@ function Seemore() {
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-            
+            sx={inputStyle}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="28">Action</MenuItem>
@@ -174,7 +195,7 @@ function Seemore() {
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             InputLabelProps={{ style: { color: "#ECDFCC" } }}
-           
+            sx={inputStyle}
           >
             <MenuItem value="none">None</MenuItem>
             <MenuItem value="rating">Rating</MenuItem>
@@ -198,7 +219,7 @@ function Seemore() {
         }}
       >
 
-        {filtered.length===0 && <Box sx={{display:'flex',justifyContent:'center',color:'white'}}>
+        {filtered.length===0 && <Box sx={{display:'flex',justifyContent:'center',color:'white',height:'100vh'}}>
           <Typography>No results found</Typography>
           </Box>}
         {filtered?.map((item) => (
