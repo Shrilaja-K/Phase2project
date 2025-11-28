@@ -49,9 +49,6 @@ function Seemore() {
     '&:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: '#FFFFFF', 
     },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#FFFFFF', 
-    },
   };
  
   useEffect(() => {

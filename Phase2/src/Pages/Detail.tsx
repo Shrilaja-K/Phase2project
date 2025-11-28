@@ -155,11 +155,11 @@ function Details() {
             {data.overview}
           </Typography>
 
-          <Typography>⭐ Rating: {data.vote_average.toFixed(1)}</Typography>
-          <Typography>📅 Release: {data.release_date}</Typography>
+          <Typography>Rating: {data.vote_average.toFixed(1)}</Typography>
+          <Typography>Release: {data.release_date}</Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography>🎬 Genres:</Typography>
+            <Typography>Genres:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
               {data.genres.map((g) => (
                 <Chip
@@ -171,10 +171,10 @@ function Details() {
             </Box>
           </Box>
 
-          <Typography>⏱ Runtime: {data.runtime} mins</Typography>
+          <Typography>Runtime: {data.runtime} mins</Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography>🗣 Languages:</Typography>
+            <Typography>Languages:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
               {data.spoken_languages.map((l, i) => (
                 <Chip
@@ -187,7 +187,7 @@ function Details() {
           </Box>
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography sx={{ mt: 2 }}>🎥 Watch Providers:</Typography>
+            <Typography sx={{ mt: 2 }}>Watch Providers:</Typography>
             {providers.length === 0 ? (
               <Typography>No providers available.</Typography>
             ) : (

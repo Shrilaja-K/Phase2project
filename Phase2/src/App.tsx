@@ -6,7 +6,6 @@ import { Box, Typography,CircularProgress } from "@mui/material";
 import './App.css';
 
 
-
 const Homepage = lazy(() => import("./Pages/Homepage"));
 const Detail = lazy(() => import("./Pages/Detail"));
 const Favorites = lazy(() => import("./Pages/Favorites"));

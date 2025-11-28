@@ -13,7 +13,7 @@ import type {User} from '../redux/Auth'
 
 const Login = () => {
  
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const Navigate=useNavigate();
   const authError = useSelector((state: RootState) => state.auth.error);
 
@@ -22,17 +22,17 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(loginUser(form.email, form.password) as any);
+    dispatch(loginUser(form.email, form.password) );
     Navigate("/");
   };
 
   const handleGoogle = (res: any) => {
     const token = res.credential;
 
-    const decoded: any = jwtDecode(token);
+    const decoded = jwtDecode(token);
 
      const user: User = {
       name: decoded.name,

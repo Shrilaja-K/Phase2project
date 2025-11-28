@@ -27,7 +27,6 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
-    toggleDrawer();
     navigate('/login');
   };
 
