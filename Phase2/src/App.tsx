@@ -1,9 +1,10 @@
-import React,{ Suspense, lazy } from 'react'
+import { Suspense, lazy } from 'react'
 import Navbar from './Components/Navbar'
 import {Routes,Route} from 'react-router-dom'
 import ProtectedRoute from './Components/ProtectedRoute'
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,CircularProgress } from "@mui/material";
 import './App.css';
+
 
 
 const Homepage = lazy(() => import("./Pages/Homepage"));
@@ -35,6 +36,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
           </Box>
         }
       ><Detail/></Suspense>} />
@@ -49,6 +51,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Favorites/></Suspense></ProtectedRoute>} />
@@ -63,6 +66,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Loginpage/></Suspense>} />
@@ -77,6 +81,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Signup/></Suspense>} />
@@ -91,6 +96,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Movies/></Suspense>} />
@@ -105,6 +111,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Tv/></Suspense>} />
@@ -119,6 +126,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Watchlist/></Suspense></ProtectedRoute>} />
@@ -133,6 +141,7 @@ function App() {
               minHeight: "80vh",
             }}
           >
+            <CircularProgress/>
             </Box>
         }
           ><Seemore/></Suspense>} />
