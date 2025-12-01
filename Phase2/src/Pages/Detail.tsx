@@ -335,7 +335,7 @@ function Details() {
                 sx={{ mt: 1 }}
                 size="small"
                 onClick={() =>
-                  setShowFull({ ...showFull, [rev.id]: !isFull })
+                  setShowFull({ ...showFull,[ rev.id ]: !isFull })
                 }
               >
                 {isFull ? "Show Less" : "Show More"}

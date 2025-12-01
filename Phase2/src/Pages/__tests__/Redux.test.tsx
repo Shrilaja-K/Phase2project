@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import { nowPlayingfn, Popularfn, topRatedfn } from "../../redux/homeAction";
 import { fetchnowplaying, fetchpopular, fetchtoprated } from "../../redux/homeAction";
  
-describe("Home Actions Thunks", () => {
+describe("Home Actions", () => {
   let mock: MockAdapter;
   let dispatch: jest.Mock;
  

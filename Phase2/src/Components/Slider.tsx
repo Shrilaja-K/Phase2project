@@ -20,7 +20,6 @@ function Slider({ title, data, seeMorePath }) {
           display: "flex",
           gap: 2,
           overflowX: "auto",
-          
           "&::-webkit-scrollbar": { display: "none" },
         }}
       >
@@ -59,7 +58,7 @@ function Slider({ title, data, seeMorePath }) {
             cursor: "pointer",
           }}
         >
-          <Typography sx={{ color: "#41ca48ff", fontWeight: "bold" }}>
+          <Typography sx={{ color: "#e2d6d6ff", fontWeight: "bold" }}>
             See More →
           </Typography>
         </Box>
@@ -68,4 +67,4 @@ function Slider({ title, data, seeMorePath }) {
   );
 }
 
-export default Slider;
+export default Slider;  

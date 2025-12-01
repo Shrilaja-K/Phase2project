@@ -6,7 +6,7 @@ interface Props {
   children: JSX.Element;
 }
 
-const ProtectedRoute: React.FC<Props> = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const userEmail = useSelector((state: any) => state.auth?.user?.email);
 
   if (!userEmail) {
