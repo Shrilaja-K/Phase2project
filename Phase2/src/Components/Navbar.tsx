@@ -30,6 +30,11 @@ function Navbar() {
     navigate('/login');
   };
 
+  const navigatehome = () => {
+    navigate('/');
+    dispatch(setSearchText(''));
+  }
+
   return (
     <>
       <AppBar position='fixed'
@@ -52,7 +57,9 @@ function Navbar() {
           <Typography sx={{
             fontSize: 22, fontWeight: 'bold', cursor: 'pointer',
             color: '#ECDFCC', '&:hover': { color: '#697565' }
-          }} onClick={() => navigate('/')}>
+          }} onClick={() =>
+            navigatehome()
+          }>
             CineScope
           </Typography>
 

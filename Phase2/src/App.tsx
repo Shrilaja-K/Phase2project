@@ -21,11 +21,7 @@ function App() {
   return (
     <>
       <Navbar />
-      
-      <Routes>
-        <Route path='/' element={<Homepage/>} />
-        <Route path='/details/:id' element={
-          <Suspense
+       <Suspense
         fallback={
           <Box
             sx={{
@@ -38,112 +34,26 @@ function App() {
             <CircularProgress/>
           </Box>
         }
-      ><Detail/></Suspense>} />
+        >
+      <Routes>
+        <Route path='/' element={<Homepage/>} />
+        <Route path='/details/:type/:id' element={
+         
+        <Detail/>} />
         <Route path='/favorites' element={<ProtectedRoute>
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Favorites/></Suspense></ProtectedRoute>} />
+        <Favorites/></ProtectedRoute>} />
         <Route path='/login' element={
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Loginpage/></Suspense>} />
+          <Loginpage/>} />
         <Route path='/signup' element={
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Signup/></Suspense>} />
+          <Signup/>} />
         <Route path='/movies' element={
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Movies/></Suspense>} />
+          <Movies/>} />
         <Route path='/tv' element={
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Tv/></Suspense>} />
+          <Tv/>} />
         <Route path='/watchlist' element={<ProtectedRoute>
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Watchlist/></Suspense></ProtectedRoute>} />
+          <Watchlist/></ProtectedRoute>} />
         <Route path='/seemore/:type' element={
-          <Suspense
-        fallback={
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-            }}
-          >
-            <CircularProgress/>
-            </Box>
-        }
-          ><Seemore/></Suspense>} />
+          <Seemore/>} />
         <Route path='*' element={
           <Box sx={{marginTop:50,display:'flex',justifyContent:'center'}}>
             <Typography >
@@ -153,6 +63,7 @@ function App() {
         } />
 
       </Routes>
+      </Suspense>
     </>
   )
 }

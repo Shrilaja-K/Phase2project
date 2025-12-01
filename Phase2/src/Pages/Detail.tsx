@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 
 function Details() {
-  const { id } = useParams();
+  const { type, id } = useParams();  
   const navigate = useNavigate();
- 
+
   const API_KEY = import.meta.env.VITE_CINE_API_KEY;
 
   const [data, setData] = useState(null);
@@ -44,42 +44,53 @@ function Details() {
     setisAdded(false);
   };
 
-   
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
-        );
+        const url =
+          type === "tv"
+            ? `https://api.themoviedb.org/3/tv/${id}`
+            : `https://api.themoviedb.org/3/movie/${id}`;
+
+        const res = await axios.get(`${url}?api_key=${API_KEY}`);
         setData(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchDetails();
-  }, [id]);
+  }, [id, type]);
+
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${API_KEY}`
-        );
+        const url =
+          type === "tv"
+            ? `https://api.themoviedb.org/3/tv/${id}/reviews`
+            : `https://api.themoviedb.org/3/movie/${id}/reviews`;
+
+        const res = await axios.get(`${url}?api_key=${API_KEY}`);
         setReviews(res.data.results);
       } catch (err) {
         console.log(err);
       }
     };
     fetchReviews();
-  }, [id]);
+  }, [id, type]);
 
+ 
   useEffect(() => {
     const fetchProviders = async () => {
       try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`
-        );
+        const url =
+          type === "tv"
+            ? `https://api.themoviedb.org/3/tv/${id}/watch/providers`
+            : `https://api.themoviedb.org/3/movie/${id}/watch/providers`;
+
+        const res = await axios.get(`${url}?api_key=${API_KEY}`);
         const IN = res.data.results?.IN;
+
         if (IN?.flatrate) setProviders(IN.flatrate);
         else setProviders([]);
       } catch (err) {
@@ -87,22 +98,26 @@ function Details() {
       }
     };
     fetchProviders();
-  }, [id]);
+  }, [id, type]);
 
- 
   useEffect(() => {
     const fetchSimilar = async () => {
       try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}`
-        );
+        const url =
+          type === "tv"
+            ? `https://api.themoviedb.org/3/tv/${id}/similar`
+            : `https://api.themoviedb.org/3/movie/${id}/similar`;
+
+        const res = await axios.get(`${url}?api_key=${API_KEY}`);
         setSimilar(res.data.results);
       } catch (err) {
         console.log(err);
       }
     };
     fetchSimilar();
-  }, [id]);
+  }, [id, type]);
+
+
 
   if (!data)
     return (
@@ -115,9 +130,10 @@ function Details() {
 
   return (
     <Box sx={{ background: "#181C14", p: 4, pt: 12, color: "#ECDFCC" }}>
-      <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => navigate(-1)}>
-                Back
-              </Button>
+      <Button variant="text" sx={{ color: "whitesmoke" }} onClick={() => navigate(-1)}>
+        Back
+      </Button>
+
       <Box
         sx={{
           display: "grid",
@@ -125,8 +141,7 @@ function Details() {
           gap: 4,
         }}
       >
-
-     
+    
         <Box>
           <Box
             component="img"
@@ -139,7 +154,7 @@ function Details() {
           />
         </Box>
 
-    
+
         <Box
           sx={{
             display: "grid",
@@ -148,7 +163,7 @@ function Details() {
           }}
         >
           <Typography variant="h4" sx={{ gridColumn: "1/3", mb: 1 }}>
-            {data.title}
+            {type === "tv" ? data.name : data.title}
           </Typography>
 
           <Typography sx={{ gridColumn: "1/3", color: "#697565" }}>
@@ -156,12 +171,15 @@ function Details() {
           </Typography>
 
           <Typography>Rating: {data.vote_average.toFixed(1)}</Typography>
-          <Typography>Release: {data.release_date}</Typography>
+
+          <Typography>
+            Release: {type === "tv" ? data.first_air_date : data.release_date}
+          </Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
             <Typography>Genres:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
-              {data.genres.map((g) => (
+              {data.genres?.map((g) => (
                 <Chip
                   key={g.id}
                   label={g.name}
@@ -171,12 +189,16 @@ function Details() {
             </Box>
           </Box>
 
-          <Typography>Runtime: {data.runtime} mins</Typography>
+          <Typography>
+            {type === "tv"
+              ? `Episodes: ${data.number_of_episodes}`
+              : `Runtime: ${data.runtime} mins`}
+          </Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
             <Typography>Languages:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
-              {data.spoken_languages.map((l, i) => (
+              {data.spoken_languages?.map((l, i) => (
                 <Chip
                   key={i}
                   label={l.english_name}
@@ -185,6 +207,7 @@ function Details() {
               ))}
             </Box>
           </Box>
+
 
           <Box sx={{ gridColumn: "1/3" }}>
             <Typography sx={{ mt: 2 }}>Watch Providers:</Typography>
@@ -225,7 +248,7 @@ function Details() {
           }}
         >
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Similar Movies
+            Similar {type === "tv" ? "Shows" : "Movies"}
           </Typography>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -233,21 +256,22 @@ function Details() {
               <Box
                 key={item.id}
                 sx={{ display: "flex", gap: 2, cursor: "pointer" }}
-                onClick={() => navigate(`/details/${item.id}`)}
+                onClick={() => navigate(`/details/${type}/${item.id}`)}
               >
                 <img
                   src={`https://image.tmdb.org/t/p/w200${item.poster_path}`}
                   style={{ width: 60, borderRadius: 4 }}
                 />
-                <Typography>{item.title}</Typography>
+                <Typography>{item.title || item.name}</Typography>
               </Box>
             ))}
           </Box>
         </Box>
       </Box>
 
+
       <Box sx={{ mt: 5 }}>
-        <Typography sx={{ mb: 1, fontSize: 20 }}>Rate this Movie</Typography>
+        <Typography sx={{ mb: 1, fontSize: 20 }}>Rate this {type === "tv" ? "Show" : "Movie"}</Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
           <TextField
@@ -261,25 +285,29 @@ function Details() {
               label: { color: "#ECDFCC" },
             }}
           />
+
           <Button variant="contained" onClick={handleAddRating}>
             Save
           </Button>
+
           <Button color="error" variant="outlined" onClick={handleDeleteRating}>
             Delete
           </Button>
         </Box>
-         <Typography>
-            {isAdded && "Rating Added!"}
-            {isDeleted && "Rating Deleted!"}
-          </Typography>
+
+        <Typography>
+          {isAdded && "Rating Added!"}
+          {isDeleted && "Rating Deleted!"}
+        </Typography>
       </Box>
 
       <Divider sx={{ my: 5 }} />
 
+
       <Typography sx={{ mb: 2, fontSize: 20 }}>Reviews</Typography>
-       {reviews.length === 0 &&
-        <Typography>No reviews available.</Typography>
-       }
+
+      {reviews.length === 0 && <Typography>No reviews available.</Typography>}
+
       {reviews.map((rev) => {
         const isFull = showFull[rev.id];
         const content = isFull

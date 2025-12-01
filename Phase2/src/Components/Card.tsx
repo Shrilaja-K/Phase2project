@@ -17,6 +17,7 @@ function Card({ item }) {
  
   const isFav = fav?.some(f => f.id === item.id && f.favby==email);
   const isWatch = watch?.some(w => w.id === item.id);
+   const mediaType = item.media_type || (item.title ? "movie" : "tv");
  
   const handleFav = (e) => {
     e.stopPropagation();
@@ -41,7 +42,10 @@ function Card({ item }) {
         "&:hover": { transform: "scale(1.04)" },
         position: "relative",
       }}
-      onClick={() => navigate(`/details/${item.id}`)}
+    
+
+onClick={() => navigate(`/details/${mediaType}/${item.id}`)}
+
     >
       <IconButton
         onClick={handleFav}
