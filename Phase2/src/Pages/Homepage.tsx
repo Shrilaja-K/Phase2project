@@ -73,7 +73,6 @@ function Section({ title, data, seeMorePath }: any) {
 
 function Homepage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const home = useSelector((state: any) => state.home);
 
   const [searchText, setSearchText] = useState("");

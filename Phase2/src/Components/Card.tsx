@@ -17,7 +17,7 @@ function Card({ item }) {
  
   const isFav = fav?.some(f => f.id === item.id && f.favby==email);
   const isWatch = watch?.some(w => w.id === item.id);
-   const mediaType = item.media_type || (item.title ? "movie" : "tv");
+   const mediaType = (item.title ? "movie" : "tv");
  
   const handleFav = (e) => {
     e.stopPropagation();

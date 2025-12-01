@@ -57,7 +57,7 @@ function App() {
         <Route path='*' element={
           <Box sx={{marginTop:50,display:'flex',justifyContent:'center'}}>
             <Typography >
-              No Match Found
+              No Page Found
             </Typography>
           </Box>
         } />

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../redux/authAction";
-import type { RootState } from "../redux/rootReducer";
+import  { RootState } from "../redux/rootReducer";
 import { jwtDecode } from "jwt-decode";
-import { loginSuccess } from "../redux/authAction";
+import type { loginSuccess } from "../redux/authAction";
 import { GoogleLogin } from "@react-oauth/google";
 import type {User} from '../redux/Auth'
 import { Box,Paper,Typography,TextField,Button } from "@mui/material";
@@ -34,9 +34,7 @@ const Signup = () => {
    const handleGoogle = (res: any) => {
         const token = res.credential;
         const decoded: DecodedToken = jwtDecode(token);
-    
         const user: User = {
-          username: decoded.name,
           email: decoded.email,
           picture: decoded.picture,
           id: decoded.sub,  

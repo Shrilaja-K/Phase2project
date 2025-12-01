@@ -1,8 +1,6 @@
 export const ADD_LIST =  "ADD_LIST";
 export const REMOVE_LIST = "REMOVE_LIST";
 
-
-
 export interface Addlist{
     type:typeof ADD_LIST;
     payload:any []

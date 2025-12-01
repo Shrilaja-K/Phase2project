@@ -1,7 +1,8 @@
 import {ADD_FAV, REMOVE_FAV} from "./favAction";
+
 export interface Post {
   id: number;
-  [key: string]: any;
+  [key: string] ;
 }
 
 interface favstate {

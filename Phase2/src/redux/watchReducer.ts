@@ -1,4 +1,5 @@
 import {ADD_LIST, REMOVE_LIST} from "./watchAction";
+
 export interface Post {
   id: number;
   [key: string]: any;

@@ -18,6 +18,7 @@ function Seemore() {
     "& .MuiInputBase-input": { color: "#FFFFFF" },
     "& .MuiOutlinedInput-notchedOutline": { borderColor: "#FFFFFF" },
     "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#FFFFFF" },
+    "& .MuiInputLabel-root": { color: "#ECDFCC" },
   };
 
   const fetchData = async () => {
