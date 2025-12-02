@@ -16,6 +16,7 @@ function Details() {
   const navigate = useNavigate();
 
   const API_KEY = import.meta.env.VITE_CINE_API_KEY;
+  const VITE_SESS_TOKEN = import.meta.env.VITE_SESSION_ID;
 
   const [data, setData] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -26,23 +27,58 @@ function Details() {
   const [isAdded, setisAdded] = useState(false);
   const [isDeleted, setisDeleted] = useState(false);
 
-  useEffect(() => {
-    const savedRating = localStorage.getItem(`rating_${id}`);
-    if (savedRating) setRatingValue(savedRating);
-  }, [id]);
 
-  const handleAddRating = () => {
-    localStorage.setItem(`rating_${id}`, ratingValue);
-    setisAdded(true);
-    setisDeleted(false);
-  };
+  //console.log(axios.get(`https://api.themoviedb.org/3/authentication/token/new?api_key=${API_KEY}`))
+  //console.log(axios.get(`https://api.themoviedb.org/3/authentication/session/new?api_key=${API_KEY}`, { "request_token": "de5088d5c0b3f93347914b1f0bb3997e035d7436" }))
+  //session_id: 34e4b758beec245d4f0c296abf01a78a2f5fa834
 
-  const handleDeleteRating = () => {
-    localStorage.removeItem(`rating_${id}`);
-    setRatingValue("");
-    setisDeleted(true);
-    setisAdded(false);
-  };
+  // useEffect(() => {
+  //   const savedRating = localStorage.getItem(`rating_${id}`);
+  //   if (savedRating) setRatingValue(savedRating);
+  // }, [id]);
+
+  // const handleAddRating = () => {
+  //   localStorage.setItem(`rating_${id}`, ratingValue);
+  //   setisAdded(true);
+  //   setisDeleted(false);
+  // };
+
+  // const handleDeleteRating = () => {
+  //   localStorage.removeItem(`rating_${id}`);
+  //   setRatingValue("");
+  //   setisDeleted(true);
+  //   setisAdded(false);
+  // };
+
+  const addRating = async(ratingValue) => {
+    try {
+        // const url =
+        //   type === "tv"
+        //     ? `https://api.themoviedb.org/3/tv/${id}/rating`
+        //     : `https://api.themoviedb.org/3/movie/${id}/rating`;
+        // guest_session_id=32af3d4bf80fba51f10e04f4b32804ed
+        const url = `https://api.themoviedb.org/3/account/22503314/watchlist`
+
+        const params = {
+          media_type: 'movie', 
+          media_id: 550, 
+          watchlist: true
+        }
+
+        const res = await axios.get(`${url}?api_key=${API_KEY}&session_id=${VITE_SESS_TOKEN}`, {
+          params
+        });
+        if (res.status === 201 || res.status === 200) {
+        alert('Rating submitted successfully!');
+         setisAdded(true);
+     setisDeleted(false);
+      }
+      } catch (err) {
+        console.log(err);
+      }
+     
+  }
+
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -60,6 +96,7 @@ function Details() {
     };
     fetchDetails();
   }, [id, type]);
+
 
 
   useEffect(() => {
@@ -122,7 +159,7 @@ function Details() {
   if (!data)
     return (
       <Typography
-        sx={{ color: "#ECDFCC", mt: 20, textAlign: "center", fontSize: 24 }}
+        sx={{ color: "#ECDFCC",backgroundColor:"#181C14", mt: 10, textAlign: "center", fontSize: 24 }}
       >
         Loading...
       </Typography>
@@ -170,14 +207,14 @@ function Details() {
             {data.overview}
           </Typography>
 
-          <Typography>Rating: {data.vote_average.toFixed(1)}</Typography>
+          <Typography>⭐ Rating: {data.vote_average.toFixed(1)}</Typography>
 
           <Typography>
-            Release: {type === "tv" ? data.first_air_date : data.release_date}
+            🎞️ Release: {type === "tv" ? data.first_air_date : data.release_date}
           </Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography>Genres:</Typography>
+            <Typography>🎬 Genres:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
               {data.genres?.map((g) => (
                 <Chip
@@ -191,12 +228,12 @@ function Details() {
 
           <Typography>
             {type === "tv"
-              ? `Episodes: ${data.number_of_episodes}`
-              : `Runtime: ${data.runtime} mins`}
+              ? `🎥 Episodes: ${data.number_of_episodes}`
+              : `🎥 Runtime: ${data.runtime} mins`}
           </Typography>
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography>Languages:</Typography>
+            <Typography>🗣️ Languages:</Typography>
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
               {data.spoken_languages?.map((l, i) => (
                 <Chip
@@ -210,7 +247,7 @@ function Details() {
 
 
           <Box sx={{ gridColumn: "1/3" }}>
-            <Typography sx={{ mt: 2 }}>Watch Providers:</Typography>
+            <Typography sx={{ mt: 2 }}>🍿⃢📺 Watch Providers:</Typography>
             {providers.length === 0 ? (
               <Typography>No providers available.</Typography>
             ) : (
@@ -271,7 +308,7 @@ function Details() {
 
 
       <Box sx={{ mt: 5 }}>
-        <Typography sx={{ mb: 1, fontSize: 20 }}>Rate this {type === "tv" ? "Show" : "Movie"}</Typography>
+        <Typography sx={{ mb: 1, fontSize: 20 }}>⭐ Rate this {type === "tv" ? "Show" : "Movie"}</Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
           <TextField
@@ -286,13 +323,13 @@ function Details() {
             }}
           />
 
-          <Button variant="contained" onClick={handleAddRating}>
+          <Button variant="contained" onClick={addRating}>
             Save
           </Button>
 
-          <Button color="error" variant="outlined" onClick={handleDeleteRating}>
+          {/* <Button color="error" variant="outlined" onClick={handleDeleteRating}>
             Delete
-          </Button>
+          </Button> */}
         </Box>
 
         <Typography>
@@ -304,7 +341,7 @@ function Details() {
       <Divider sx={{ my: 5 }} />
 
 
-      <Typography sx={{ mb: 2, fontSize: 20 }}>Reviews</Typography>
+      <Typography sx={{ mb: 2, fontSize: 20 }}>💬 Reviews</Typography>
 
       {reviews.length === 0 && <Typography>No reviews available.</Typography>}
 

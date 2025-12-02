@@ -19,7 +19,13 @@ import Card from "../Components/Card";
 import SkeletonCard from "../Components/SkeletonCard";
 import Footer from "../Components/Footer";
 
-function Section({ title, data, seeMorePath }: any) {
+interface ex{
+  title:string
+  data:[]
+  seeMorePath:string 
+}
+
+function Section({ title, data, seeMorePath }:ex) {
   const navigate = useNavigate();
   return (
     <Box sx={{ p: 2 }}>
@@ -37,18 +43,9 @@ function Section({ title, data, seeMorePath }: any) {
         >
           {title.toUpperCase()}
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            color: "#ECDFCC",
-            mt: 2,
-            cursor: "pointer",
-            marginRight: 2,
-          }}
-          onClick={() => navigate(seeMorePath)}
-        >
-          See More
-        </Typography>
+        <Typography  onClick={() => navigate(seeMorePath)} sx={{ color: "#e2d6d6ff", cursor:'pointer',fontWeight: "bold" ,marginRight:2}}>
+            See More →
+          </Typography>
       </Box>
 
       <Box
@@ -59,17 +56,18 @@ function Section({ title, data, seeMorePath }: any) {
             xs: "repeat(2, 1fr)",
             sm: "repeat(3, 1fr)",
             md: "repeat(5, 1fr)",
-            lg: "repeat(6, 1fr)",
+            lg: "repeat(6, 1fr)", 
           },
         }}
       >
-        {data && data.length > 0
+        { data?.length > 0
           ? data.slice(0, 6).map((item: any) => <Card key={item.id} item={item} />)
           : Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
       </Box>
     </Box>
   );
 }
+
 
 function Homepage() {
   const dispatch = useDispatch();
@@ -78,6 +76,7 @@ function Homepage() {
   const [searchText, setSearchText] = useState("");
   const [apiResults, setApiResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
   const API_KEY = import.meta.env.VITE_CINE_API_KEY;
 
@@ -136,6 +135,19 @@ function Homepage() {
 
     return () => clearTimeout(delay);
   }, [searchText]);
+
+   useEffect(() => {
+      const handleScroll = () => {
+        if (
+          window.innerHeight + window.scrollY + 150 >=
+          document.documentElement.scrollHeight
+        ) {
+          setPage((p) => p + 1);
+        }
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
   return (
     <Box>

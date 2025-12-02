@@ -12,7 +12,6 @@ import type {User} from '../redux/Auth'
 
 
 const Login = () => {
- 
   const dispatch = useDispatch();
   const Navigate=useNavigate();
   const authError = useSelector((state: RootState) => state.auth.error);
@@ -22,27 +21,26 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(loginUser(form.email, form.password) );
-    Navigate("/");
+    dispatch(loginUser(form.email, form.password) as any);
+    Navigate(-1);
   };
 
   const handleGoogle = (res: any) => {
     const token = res.credential;
+    const decoded: DecodedToken = jwtDecode(token);
 
-    const decoded = jwtDecode(token);
-
-     const user: User = {
-      name: decoded.name,
+    const user: User = {
+      username: decoded.name,
       email: decoded.email,
       picture: decoded.picture,
       id: decoded.sub,  
     }
 
-     dispatch(loginSuccess(user, token) );
-    Navigate("/");
+    dispatch(loginSuccess(user,token));
+    Navigate(-1);
   };
 
   return (
@@ -54,7 +52,6 @@ const Login = () => {
         alignItems: "center",
         backgroundColor: "#181C14",
         px: 2,
-        mt:10
       }}
     >
       <Paper

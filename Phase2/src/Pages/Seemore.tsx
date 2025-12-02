@@ -21,6 +21,11 @@ function Seemore() {
     "& .MuiInputLabel-root": { color: "#ECDFCC" },
   };
 
+const styleSX = {
+  minWidth : '20%',
+  ...inputStyle
+}
+
   const fetchData = async () => {
     try {
       const params: any = { api_key: API_KEY, page, sort_by: sort };
@@ -61,11 +66,14 @@ function Seemore() {
         Back
       </Button>
 
-      <Typography variant="h4" sx={{ mb: 3, color: "#ECDFCC" }}>
-        {type?.toUpperCase()}
-      </Typography>
+      <Typography
+                variant="h5"
+                sx={{ fontWeight: 700, color: "#ECDFCC", mt: 2 ,mb:2,textAlign:'center'}}
+              >
+                {type.toUpperCase()}
+              </Typography>
 
-      <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
+      <Box sx={{ display: "flex", gap: 2, mb: 4 ,textAlign:'center',justifyContent:'center' ,}}>
         <TextField
           select
           label="Genre"
@@ -75,7 +83,7 @@ function Seemore() {
             setResults([]);
             setGenre(e.target.value);
           }}
-          sx={inputStyle}
+         sx={styleSX}
         >
           <MenuItem value="all">All</MenuItem>
           <MenuItem value="28">Action</MenuItem>
@@ -92,7 +100,7 @@ function Seemore() {
             setResults([]);
             setSort(e.target.value);
           }}
-          sx={inputStyle}
+          sx={styleSX}  
         >
           <MenuItem value="popularity.desc">Popularity</MenuItem>
           <MenuItem value="vote_average.desc">Rating</MenuItem>

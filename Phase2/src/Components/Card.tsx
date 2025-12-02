@@ -69,6 +69,7 @@ onClick={() => navigate(`/details/${mediaType}/${item.id}`)}
         style={{
           width: "100%",
           borderRadius: "10px",
+          
         }}
       />
 
@@ -79,15 +80,14 @@ onClick={() => navigate(`/details/${mediaType}/${item.id}`)}
           color: "#ECDFCC",
           mt: 1.2,
           textAlign: "center",
-          fontWeight: 500,
-            
+          fontWeight: 500,    
     overflow: "hidden",
     height: 15,
         }}
       >
         {item.title || item.name}
       </Typography>
- 
+        
       <Button
         onClick={handleWatch}
         fullWidth

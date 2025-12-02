@@ -8,11 +8,16 @@ function Slider({ title, data, seeMorePath }) {
   return (
     <Box sx={{ background: "#181C14",pb:4}}>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-        <Typography variant="h5" sx={{ color: "#ECDFCC", fontWeight: 700 }}>
-          {title}
-        </Typography>
+        <Typography
+                  variant="h5"
+                  sx={{ fontWeight: 700, color: "#ECDFCC", mt: 2 }}
+                >
+                  {title.toUpperCase()}
+                </Typography>
 
-       
+        <Typography  onClick={() => navigate(seeMorePath)} sx={{ color: "#e2d6d6ff", cursor:'pointer',fontWeight: "bold" ,marginRight:2}}>
+            See More →
+          </Typography>
       </Box>
 
       <Box
@@ -20,6 +25,7 @@ function Slider({ title, data, seeMorePath }) {
           display: "flex",
           gap: 2,
           overflowX: "auto",
+          overflowY:'hidden',
           "&::-webkit-scrollbar": { display: "none" },
         }}
       >
@@ -40,28 +46,7 @@ function Slider({ title, data, seeMorePath }) {
           </Box>
         ))}
 
-        <Box
-          onClick={() => navigate(seeMorePath)}
-          sx={{
-            flexShrink: 0,
-            width: {
-              xs: "45%",
-              sm: "30%",
-              md: "18%",
-              lg: "15%",
-            },
-            borderRadius: "10px",
-            background: "#2E2E2E",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Typography sx={{ color: "#e2d6d6ff", fontWeight: "bold" }}>
-            See More →
-          </Typography>
-        </Box>
+        
       </Box>
     </Box>
   );

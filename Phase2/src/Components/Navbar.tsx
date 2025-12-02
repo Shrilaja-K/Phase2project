@@ -32,7 +32,6 @@ function Navbar() {
 
   const navigatehome = () => {
     navigate('/');
-    dispatch(setSearchText(''));
   }
 
   return (
@@ -91,8 +90,6 @@ function Navbar() {
             )}
           </Box>
 
-
-          
           </Toolbar>
       </AppBar>
 

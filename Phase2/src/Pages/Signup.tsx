@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../redux/authAction";
-import  { RootState } from "../redux/rootReducer";
+import type { RootState } from "../redux/rootReducer";
 import { jwtDecode } from "jwt-decode";
 import type { loginSuccess } from "../redux/authAction";
 import { GoogleLogin } from "@react-oauth/google";
@@ -20,7 +20,7 @@ const Signup = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(
@@ -33,7 +33,7 @@ const Signup = () => {
   };
    const handleGoogle = (res: any) => {
         const token = res.credential;
-        const decoded: DecodedToken = jwtDecode(token);
+        const decoded = jwtDecode(token);
         const user: User = {
           email: decoded.email,
           picture: decoded.picture,

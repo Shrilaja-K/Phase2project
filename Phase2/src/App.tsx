@@ -4,6 +4,7 @@ import {Routes,Route} from 'react-router-dom'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { Box, Typography,CircularProgress } from "@mui/material";
 import './App.css';
+import Example from './Pages/Example';
 
 
 const Homepage = lazy(() => import("./Pages/Homepage"));
@@ -20,6 +21,7 @@ const Seemore = lazy(() => import("./Pages/Seemore"));
 function App() {
   return (
     <>
+    <Box sx={{backgroundColor:"#181C14",height:"100vh"}}>
       <Navbar />
        <Suspense
         fallback={
@@ -55,8 +57,8 @@ function App() {
         <Route path='/seemore/:type' element={
           <Seemore/>} />
         <Route path='*' element={
-          <Box sx={{marginTop:50,display:'flex',justifyContent:'center'}}>
-            <Typography >
+          <Box sx={{mt:10,display:'flex',justifyContent:'center',textAlign:"center"}}>
+            <Typography sx={{color:"whitesmoke"}} >
               No Page Found
             </Typography>
           </Box>
@@ -64,6 +66,8 @@ function App() {
 
       </Routes>
       </Suspense>
+      </Box>
+      {/* <Example /> */}
     </>
   )
 }

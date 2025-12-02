@@ -36,7 +36,6 @@ function Favorites() {
       sx={{
         minHeight: "100vh",
         backgroundColor: "#181C14",
-        paddingY: 5,
         paddingX: { xs: 2, sm: 5 },
         paddingTop:15
       }}

@@ -28,7 +28,7 @@ function Tv() {
   }, [dispatch]);
   
   return (
-     <Box sx={{ background: "#181C14",paddingTop:15 }}>
+     <Box sx={{ background: "#181C14",paddingTop:10 }}>
        <Button variant="text" sx={{color:"whitesmoke"}} onClick={() => Navigate(-1)}>
         Back
       </Button>
